@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Produto (réplica de layout)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Página de produto da Loja Exemplo. Réplica de layout para estudo: marca e dados fictícios.">
+<meta name="theme-color" content="#303030">
+<meta name="color-scheme" content="dark light">
+<script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* Página de produto (PDP). Usa só os tokens de assets/style.css, então segue o tema claro/escuro. */
+.pdp{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;margin:8px 0 32px}
+.pdp h1{font-size:23px;font-weight:500;line-height:1.3;margin:6px 0 12px;color:var(--txt);overflow-wrap:anywhere}
+/* galeria */
+.gal{min-width:0;position:sticky;top:96px;align-self:start}
+.gmain{position:relative;background:#fff;aspect-ratio:1/1;overflow:hidden;border-radius:6px}
+.gview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;cursor:zoom-in;outline:none}
+.gview:focus-visible{box-shadow:inset 0 0 0 3px var(--focus)}
+.gview>svg,.gview>img{width:100%;height:100%;display:block;object-fit:contain;transition:transform .25s ease;transform-origin:var(--zx,50%) var(--zy,50%)}
+.gmain.zoom .gview{cursor:zoom-out}.gmain.zoom .gview>*{transform:scale(2.2)!important}
+.garr{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;border:0;background:rgba(48,48,48,.85);color:#fff;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2}
+.garr:disabled{opacity:.35;cursor:default}.garr.l{left:10px}.garr.r{right:10px}
+.garr:focus-visible,.gzoom:focus-visible,.thumbs button:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.gzoom{position:absolute;right:12px;bottom:12px;width:44px;height:44px;border-radius:50%;border:0;background:#eee;color:#222;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2}
+.gcount{position:absolute;left:12px;bottom:14px;font-size:12px;color:#333;background:rgba(255,255,255,.9);padding:2px 8px;border-radius:99px}
+.gbadge{position:absolute;left:12px;top:12px;z-index:2;display:flex;gap:6px;flex-wrap:wrap}
+.gbadge span{background:var(--deal-bg);color:var(--deal-txt);font-weight:800;font-size:15px;padding:5px 9px;border-radius:4px}
+.gbadge span.ev{background:var(--red);color:#fff;font-size:12px;text-transform:uppercase}
+.thumbs{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding:2px}
+.thumbs button{flex:0 0 auto;width:84px;height:84px;padding:4px;background:#fff;border:2px solid transparent;border-radius:4px;cursor:pointer;overflow:hidden}
+.thumbs button[aria-current="true"]{border-color:var(--red)}
+.thumbs svg,.thumbs img{width:100%;height:100%;display:block;object-fit:cover}
+/* informações e compra */
+.top-meta{display:flex;gap:12px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--mut)}
+.top-meta a{text-decoration:underline;text-underline-offset:3px}
+.meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:14px;margin-bottom:14px}
+.avail{color:var(--price);font-weight:700;text-transform:uppercase}
+.evline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:linear-gradient(90deg,var(--ev-a),var(--ev-b));color:#fff;border-radius:6px 6px 0 0;padding:9px 14px;font-size:13px}
+.evline b{text-transform:uppercase;letter-spacing:.3px}
+.evline time{margin-left:auto;font-weight:800;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:4px}
+.buybox{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:16px 16px 18px}
+.evline+.buybox{border-radius:0 0 6px 6px;border-top:0}
+.bigprice{display:flex;align-items:stretch;min-height:64px}
+.bigprice .pct{display:flex;align-items:center;padding:0 16px;background:var(--deal-bg);color:var(--deal-txt);font-size:34px;font-weight:800;border-radius:4px 0 0 4px}
+.bigprice .vals{display:flex;flex-direction:column;justify-content:center;padding:4px 14px;background:var(--chip);border-radius:0 4px 4px 0;flex:1}
+.bigprice .pct:only-child,.bigprice .vals:only-child{border-radius:4px}
+.bigprice s{font-size:14px;color:var(--mut)}
+.bigprice b{font-size:34px;font-weight:800;color:var(--price);line-height:1.05}
+.psub{font-size:14px;color:var(--txt2);margin:8px 0 2px}.psub strong{color:var(--price)}
+.pcardline{font-size:14px;color:var(--txt2)}
+.stockline{margin-top:12px;font-size:13px;font-weight:700;color:var(--flash,#ffb066)}
+.stockbar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden;margin-top:6px}
+.stockbar i{display:block;height:100%;background:linear-gradient(90deg,#ff9800,var(--red))}
+.cupom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;padding:9px 12px;border:1px dashed var(--code);border-radius:6px;font-size:13px}
+.cupom button{height:36px;padding:0 12px;border:1px solid var(--code);border-radius:18px;background:none;color:var(--code);font-weight:800;cursor:pointer;white-space:nowrap}
+.qtyrow{display:flex;gap:10px;margin-top:16px}
+.qty{display:flex;align-items:center;border:1px solid var(--edge);border-radius:4px;height:56px}
+.qty button{width:40px;height:100%;border:0;background:none;font-size:20px;cursor:pointer}
+.qty input{width:44px;text-align:center;background:none;border:0;color:var(--txt);font:inherit;font-size:17px;font-weight:700}
+.buy{display:flex;align-items:center;justify-content:center;gap:12px;flex:1;min-height:56px;border:0;border-radius:4px;background:var(--cart);color:#fff;cursor:pointer;font-family:inherit}
+.buy:hover{filter:brightness(1.1)}.buy:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.buy b{display:block;font-size:21px;font-weight:800;line-height:1}.buy small{display:block;font-size:11px;font-weight:700;text-transform:uppercase;text-align:left}
+.trust{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:14px 0 0;padding:0;list-style:none;font-size:13px}
+.trust li{display:flex;align-items:center;gap:8px;color:var(--txt2)}
+.trust li::before{content:"✓";display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--chip);color:var(--price);font-weight:800;flex:none;font-size:12px}
+.frete{margin-top:16px}
+.frete h2,.blk h2{font-size:16px;font-weight:700;text-transform:uppercase;margin:0 0 8px;color:var(--txt)}
+.frete form{display:flex;gap:8px}
+.frete input{flex:1;min-width:0;height:44px;border:1px solid var(--edge);border-radius:4px;background:var(--field);color:var(--txt);padding:0 12px;font:inherit;font-size:16px}
+.frete button{height:44px;padding:0 16px;border:0;border-radius:4px;background:var(--red);color:#fff;font-weight:700;cursor:pointer}
+.frete small{display:block;margin-top:6px;font-size:12px;color:var(--mut)}
+.fopts{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.fopts li{display:flex;justify-content:space-between;gap:10px;padding:9px 12px;background:var(--chip);border-radius:4px;font-size:14px}
+.fopts b{color:var(--price)}
+.hr{border:0;border-top:1px solid var(--line);margin:18px 0}
+.inst{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(6,auto);grid-auto-flow:column;gap:4px 20px;background:var(--bg2);padding:10px 12px;font-size:12px;margin:0;list-style:none;border-radius:4px}
+.inst li{display:flex;justify-content:space-between;gap:8px}.inst em{font-style:normal;color:var(--mut);white-space:nowrap}
+.flags{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 0;padding:0;list-style:none}
+.flags li{width:56px;height:35px;background:#fff;border-radius:4px;padding:3px;display:flex}.flags img{width:100%;height:100%;object-fit:contain}
+.acts{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.fav,.ico{background:none;border:0;color:var(--txt);cursor:pointer;display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:15px;padding:8px;min-height:44px}
+.fav[aria-pressed="true"] svg{fill:var(--red);stroke:var(--red)}
+.share{display:flex;align-items:center;gap:8px;font-size:15px}
+.ico{width:44px;height:44px;justify-content:center;padding:0;border-radius:4px;border:1px solid var(--edge)}
+.fav:focus-visible,.ico:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+/* informações adicionais */
+.extra{background:var(--bg2);margin:0 calc(var(--gut)*-1);padding:28px var(--gut) 36px}
+.ttl{text-align:center;font-size:20px;font-weight:500;text-transform:uppercase;margin:0 0 18px;position:relative;padding-top:18px}
+.ttl::before{content:"";position:absolute;top:0;left:50%;width:100px;height:3px;background:var(--red);transform:translateX(-50%)}
+.spec{width:100%;max-width:900px;margin:0 auto;border-collapse:collapse;font-size:15px}
+.spec th,.spec td{text-align:left;padding:10px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+.spec th{width:30%;font-weight:700;padding-right:16px}
+.spec td{white-space:pre-line}
+/* linhas de ofertas */
+.rowsec{padding:28px 0 6px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-h h2{font-size:19px;font-weight:800;text-transform:uppercase}
+.sec-h a{font-size:14px;font-weight:700;text-decoration:underline;text-underline-offset:3px}
+.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.row4 .pcard{background:var(--bg2)}
+.row4:empty{min-height:540px}
+/* avaliações */
+.revs{padding:30px 0 10px}
+.rnone{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:var(--bg2);border-radius:6px;padding:20px 22px}
+.rnone p{margin:0;font-size:15px}.rnone small{display:block;color:var(--mut);font-size:13px;margin-top:4px}
+.rnone button{height:44px;padding:0 18px;border:1px solid var(--edge);border-radius:4px;background:none;font-weight:700;cursor:pointer}
+/* histórico */
+.hist{padding:24px 0 36px}
+.hist .sec-h button{background:none;border:0;font-weight:700;font-size:14px;text-decoration:underline;cursor:pointer;min-height:44px}
+.hgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,180px));gap:14px}
+.hcard{display:block;background:var(--bg2);color:var(--txt);border-radius:6px;overflow:hidden}
+.hcard .hi{background:#fff;aspect-ratio:1/1;display:flex;align-items:center;justify-content:center}
+.hcard .hi svg,.hcard .hi img{width:100%;height:100%;object-fit:cover}
+.hcard p{margin:0;padding:10px;font-size:13px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hcard:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.hnote{font-size:12px;color:var(--mut);margin-top:10px}
+/* barra de compra fixa no celular */
+.mbuy{display:none}
+/* zoom em tela cheia */
+.lb{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+.lb.on{display:flex}
+.lb .box{background:#fff;width:min(92vw,92vh,900px);aspect-ratio:1/1;position:relative}
+.lb .box #lbv,.lb .box #lbv>*{width:100%;height:100%;object-fit:contain}
+.lb .x{position:absolute;top:-48px;right:0;background:none;border:0;color:#fff;font-size:34px;cursor:pointer;width:44px;height:44px}
+.lb .garr{background:rgba(0,0,0,.6)}
+:root{--code:#ffb8b8;--flash:#ffb066}:root[data-theme=light]{--code:#b3141b;--flash:#a64b00}
+@media (max-width:900px){
+  .pdp{grid-template-columns:1fr;gap:18px}.gal{position:static}
+  .gmain{aspect-ratio:auto;height:min(calc(100vw - 2*var(--gut)),46vh)}
+  .pdp h1{font-size:19px;margin-bottom:10px}
+  .bigprice .pct{font-size:26px;padding:0 12px}.bigprice b{font-size:28px}
+  .row4{grid-template-columns:repeat(2,1fr)}
+  .mbuy{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));gap:12px;align-items:center;transform:translateY(110%);transition:transform .2s}
+  .mbuy.on{transform:none}
+  body.mb-on .chat{bottom:calc(86px + env(safe-area-inset-bottom))}body.mb-on .toast{bottom:calc(92px + env(safe-area-inset-bottom))}
+  .mbuy div{flex:1;min-width:0}.mbuy strong{display:block;color:var(--price);font-size:20px;line-height:1.1}.mbuy small{font-size:11px;color:var(--txt2)}
+  .mbuy .buy{flex:none;min-height:48px;padding:0 22px}.mbuy .buy b{font-size:17px}
+  .thumbs button{width:64px;height:64px}
+}
+@media (max-width:560px){
+  .inst{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
+  .spec,.spec tbody,.spec tr,.spec th,.spec td{display:block;width:auto}
+  .spec th{padding:12px 0 2px;border:0}.spec td{padding:0 0 12px}
+  .trust{grid-template-columns:1fr}
+  .row4{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 calc(var(--gut)*-1);padding:0 var(--gut) 8px;scrollbar-width:none}
+  .row4>*{flex:0 0 72%;scroll-snap-align:start}
+  .acts{justify-content:flex-start}
+}
+@media (prefers-reduced-motion:reduce){.gview>*,.mbuy{transition:none}}
+</style>
+</head>
+<body data-page="produto" data-seed="7">
+<div id="site-header"></div>
+<script src="assets/pcs-data.js"></script>
+<script src="assets/catalogo.js"></script>
+<script src="assets/common.js"></script>
+
+<main class="in">
+  <nav class="crumb" aria-label="Você está em"><a href="index.html">Home</a>&nbsp;/&nbsp;<a href="promocao.html">Black Halloween</a>&nbsp;/&nbsp;<a id="crumbCat" href="promocao.html">Produtos</a>&nbsp;/&nbsp;<b aria-current="page" id="crumbName"></b></nav>
+
+  <section class="pdp" aria-labelledby="pname">
+    <div class="gal">
+      <div class="gmain" id="gmain">
+        <div class="gbadge" id="gbadge"></div>
+        <button class="garr l" id="gprev" aria-label="Foto anterior">‹</button>
+        <div class="gview" id="gview" tabindex="0" role="img" aria-roledescription="galeria" aria-label="Foto 1"></div>
+        <button class="garr r" id="gnext" aria-label="Próxima foto">›</button>
+        <span class="gcount" id="gcount" aria-hidden="true">1/1</span>
+        <button class="gzoom" id="gzoom" aria-label="Ampliar foto em tela cheia"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3M11 8v6M8 11h6"/></svg></button>
+      </div>
+      <div class="thumbs" id="thumbs" role="group" aria-label="Escolher foto"></div>
+    </div>
+
+    <div class="info">
+      <div class="top-meta"><span id="brandLine"></span><span aria-hidden="true">·</span><span>Sku: <span id="sku"></span></span><span aria-hidden="true">·</span><a href="#avaliacoes">Ainda sem avaliações</a></div>
+      <h1 id="pname"></h1>
+      <div class="meta"><span class="avail" id="avail">Produto disponível</span><span id="soldLine"></span></div>
+
+      <div class="evline" id="evline"><b>Black Halloween</b><span>preço da promoção</span><time data-cd></time></div>
+      <div class="buybox">
+        <div class="bigprice" id="bigprice"></div>
+        <p class="psub" id="psub"></p>
+        <p class="pcardline" id="pcardline"></p>
+        <div id="stock"></div>
+        <div id="cupomBox"></div>
+        <div class="qtyrow">
+          <div class="qty" role="group" aria-label="Quantidade"><button id="qMinus" aria-label="Diminuir quantidade">−</button><input id="qty" inputmode="numeric" value="1" aria-label="Quantidade"><button id="qPlus" aria-label="Aumentar quantidade">+</button></div>
+          <button class="buy" id="buy"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 4h2l2.4 11h11l2-8H8"/><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M14 4v6M11 7h6"/></svg><span><b>COMPRAR</b><small>Colocar no carrinho</small></span></button>
+        </div>
+        <ul class="trust" id="trust"></ul>
+        <div class="frete">
+          <h2>Calcule o frete</h2>
+          <form id="freteForm" novalidate><input id="cep" inputmode="numeric" autocomplete="postal-code" maxlength="9" placeholder="00000-000" aria-label="CEP" aria-describedby="cepNote"><button>Calcular</button></form>
+          <small id="cepNote">Valores e prazos de exemplo. O CEP não é salvo nem enviado.</small>
+          <ul class="fopts" id="fopts" aria-live="polite"></ul>
+        </div>
+      </div>
+
+      <hr class="hr">
+      <div class="blk">
+        <h2>Parcelamento</h2>
+        <ul class="inst" id="inst"></ul>
+        <ul class="flags" aria-label="Formas de pagamento aceitas"><li><img src="assets/img/pagamento/visa.png" alt="Visa" width="56" height="35" loading="lazy"></li><li><img src="assets/img/pagamento/mastercard.png" alt="Mastercard" width="56" height="35" loading="lazy"></li><li><img src="assets/img/pagamento/american.png" alt="American Express" width="56" height="35" loading="lazy"></li><li><img src="assets/img/pagamento/nubank.svg" alt="Nubank" width="56" height="35" loading="lazy"></li><li><img src="assets/img/pagamento/pix.png" alt="PIX" width="56" height="35" loading="lazy"></li><li><img src="assets/img/pagamento/boleto.png" alt="Boleto" width="56" height="35" loading="lazy"></li></ul>
+      </div>
+      <hr class="hr">
+      <div class="acts">
+        <button class="fav" id="fav" aria-pressed="false"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.3 5 6.8 5c2 0 3.4 1 4.2 2.3h2C13.8 6 15.2 5 17.2 5c3.5 0 5.6 3.6 4.3 6.8C19.5 16.4 12 21 12 21z"/></svg><span>Favoritar</span></button>
+        <div class="share"><span>Compartilhar:</span>
+          <button class="ico" id="copy" aria-label="Copiar link do produto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="1"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg></button>
+          <button class="ico" id="share" aria-label="Compartilhar"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4" stroke="currentColor" stroke-width="2"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rowsec" aria-labelledby="t-sim">
+    <div class="sec-h"><h2 id="t-sim">Ofertas parecidas</h2><a id="simAll" href="promocao.html">Ver todas</a></div>
+    <div class="row4" id="similar"></div>
+  </section>
+
+  <section class="extra" aria-labelledby="t-info">
+    <h2 class="ttl" id="t-info">Informações técnicas</h2>
+    <table class="spec"><tbody id="spec"></tbody></table>
+  </section>
+
+  <section class="rowsec" aria-labelledby="t-more">
+    <div class="sec-h"><h2 id="t-more">Mais ofertas da Black Halloween</h2><a href="promocao.html?off=40">40% OFF ou mais</a></div>
+    <div class="row4" id="more"></div>
+  </section>
+
+  <section class="revs" id="avaliacoes" aria-labelledby="t-rev">
+    <div class="sec-h"><h2 id="t-rev">Avaliações</h2></div>
+    <!-- Sem avaliações inventadas: o estado vazio é honesto e convida a avaliar. -->
+    <div class="rnone"><div><p><b>Este produto ainda não tem avaliações.</b></p><small>As avaliações aparecem aqui depois que clientes que compraram avaliam.</small></div><button id="rate">Avaliar este produto</button></div>
+  </section>
+
+  <section class="hist" aria-labelledby="t-hist">
+    <div class="sec-h"><h2 id="t-hist">Vistos recentemente</h2><button id="hclear">Limpar histórico</button></div>
+    <div class="hgrid" id="hgrid"></div>
+    <p class="hnote">O histórico fica só neste navegador; nada é enviado.</p>
+  </section>
+</main>
+
+<div class="mbuy" id="mbuy" aria-hidden="true">
+  <div><strong id="mPix"></strong><small>no PIX · ou 12x de <span id="mInst"></span></small></div>
+  <button class="buy" tabindex="-1" id="mbuyBtn"><span><b>COMPRAR</b></span></button>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+  <div class="box"><button class="x" id="lbx" aria-label="Fechar">×</button><button class="garr l" id="lbp" aria-label="Foto anterior">‹</button><div id="lbv"></div><button class="garr r" id="lbn" aria-label="Próxima foto">›</button></div>
+</div>
+
+<div id="site-footer"></div>
+<div id="site-chat" data-q="Dúvidas sobre o produto?"></div>
+
+<script>
+(function(){
+const {brl,toast,product,card}=LX, $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- dados do produto ---------- */
+// Os cards da loja mandam os dados no endereço (?n=...&pix=...&off=...). Sem dados, abre a antena do catálogo como exemplo.
+const q=new URLSearchParams(location.search);
+const demo=LX.CATALOG.find(c=>c.b==='Starlink')||LX.CATALOG[0];
+const P=q.get('n')?{
+  name:q.get('n'),sku:q.get('sku')||'PCH-00000',brand:q.get('b')||'Pichau',cat:q.get('cat')||'Produtos',
+  pix:+q.get('pix')||0,off:+q.get('off')||0,img:q.get('img'),qty:+q.get('q')||0,frete:q.has('f'),cupom:q.has('c'),
+}:{name:demo?demo.n:'Produto de exemplo',sku:demo?.sku||'PCH-10000',brand:demo?demo.b:'Pichau',cat:demo?demo.cat:'Produtos',img:demo?.img||null,
+  pix:2149.90,off:28,qty:9,frete:true,cupom:false};
+const full=P.pix/0.85,old=P.off?P.pix/(1-P.off/100):null;
+// Ficha técnica: só o que o nome do produto informa (nada de especificação inventada).
+const feats=P.name.split(',').slice(1).map(t=>t.trim()).filter(t=>t&&t!==P.sku);
+const specs=[['Marca',P.brand],['Código',P.sku],['Categoria',P.cat],...(feats.length?[['Características',feats.join('\n')]]:[]),['Garantia','12 meses'],['Conteúdo da embalagem','1 × produto e manual']];
+
+/* ---------- galeria: a foto do produto e dois detalhes ampliados dela ---------- */
+const PICS=P.img?[
+  {alt:`Foto do produto: ${P.name.split(',')[0]}`,html:`<img src="${esc(P.img)}" alt="" width="600" height="600" fetchpriority="high">`},
+  {alt:'Detalhe ampliado',html:`<img src="${esc(P.img)}" alt="" width="600" height="600" loading="lazy" style="transform:scale(1.7);transform-origin:35% 40%">`},
+  {alt:'Outro detalhe ampliado',html:`<img src="${esc(P.img)}" alt="" width="600" height="600" loading="lazy" style="transform:scale(1.9);transform-origin:70% 65%">`},
+]:[{alt:'Produto sem foto',html:'<div class="ph" style="width:100%;height:100%"><span>Sem foto</span></div>'}];
+
+/* ---------- textos e preços ---------- */
+const short=P.name.split(', EXP')[0];
+$('#pname').textContent=P.name;$('#crumbName').textContent=short;
+document.title=`Loja Exemplo — ${short.split(',')[0]} (réplica de layout)`;
+$('#crumbCat').textContent=P.cat;$('#crumbCat').href=`promocao.html?cat=${encodeURIComponent(P.cat)}`;
+$('#simAll').href=`promocao.html?cat=${encodeURIComponent(P.cat)}`;
+$('#sku').textContent=P.sku;$('#brandLine').innerHTML=`Marca: <b>${esc(P.brand)}</b>`;
+$('#gbadge').innerHTML=(P.off?`<span>-${P.off}%</span>`:'')+(LX.EVENT&&Date.now()<LX.EVENT.end&&P.off?'<span class="ev">Black Halloween</span>':'');
+if(!(P.off&&LX.EVENT&&Date.now()<LX.EVENT.end))$('#evline').remove();
+$('#bigprice').innerHTML=(P.off?`<span class="pct" aria-label="${P.off}% de desconto">-${P.off}%</span>`:'')+`<span class="vals">${old?`<s aria-label="Preço anterior ${brl(old)}">${brl(old)}</s>`:''}<b>${brl(P.pix)}</b></span>`;
+$('#psub').innerHTML=`no PIX${old?` · <strong>você economiza ${brl(old-P.pix)}</strong>`:' com 15% de desconto'}`;
+$('#pcardline').textContent=`ou ${brl(full)} em até 12x de ${brl(full/12)} sem juros no cartão`;
+$('#mPix').textContent=brl(P.pix);$('#mInst').textContent=brl(full/12);
+if(P.qty&&P.qty<40){$('#stock').innerHTML=`<p class="stockline">Restam só ${P.qty} unidades com este preço</p><div class="stockbar" aria-hidden="true"><i style="width:${Math.max(8,100-P.qty*2)}%"></i></div>`}
+else $('#avail').textContent='Em estoque';
+if(P.cupom){const c='EXEMPLO10OFF';$('#cupomBox').innerHTML=`<div class="cupom"><span>Com o cupom <b>${c}</b>: <b>${brl(P.pix*0.9)}</b> no PIX</span><button id="cpCupom" aria-label="Copiar cupom ${c}">Copiar cupom</button></div>`;
+  $('#cpCupom').onclick=()=>(navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject()).then(()=>toast('Cupom '+c+' copiado'),()=>toast('Use o código '+c))}
+$('#trust').innerHTML=['Garantia de 12 meses','Troca em até 7 dias','Compra segura',P.frete?'Frete grátis: Sul e Sudeste':'Envio para todo o Brasil'].map(t=>`<li>${t}</li>`).join('');
+const tier=n=>n===1?15:n<=3?12:n<=6?10:0;
+$('#inst').innerHTML=Array.from({length:12},(_,i)=>{const n=i+1,d=tier(n),v=(n===1?P.pix:full*(1-d/100))/n;return `<li><span>${n}x de ${brl(v)}</span><em>${d?`${d}% de desconto`:'sem juros'}</em></li>`}).join('');
+$('#spec').innerHTML=specs.map(([k,v])=>`<tr><th scope="row">${esc(k)}</th><td>${esc(v)}</td></tr>`).join('');
+
+/* ---------- galeria ---------- */
+let cur=0;
+const view=$('#gview'),gmain=$('#gmain'),lbv=$('#lbv');
+$('#thumbs').innerHTML=PICS.map((p,i)=>`<button aria-label="Foto ${i+1}: ${esc(p.alt)}" data-i="${i}">${p.html.replace(/fetchpriority="high"/,'loading="lazy"')}</button>`).join('');
+const thumbs=[...document.querySelectorAll('#thumbs button')];
+function show(i){
+  cur=(i+PICS.length)%PICS.length;
+  view.innerHTML=PICS[cur].html;view.setAttribute('aria-label',`Foto ${cur+1} de ${PICS.length}: ${PICS[cur].alt}`);
+  $('#gcount').textContent=`${cur+1}/${PICS.length}`;
+  thumbs.forEach((b,k)=>b.setAttribute('aria-current',k===cur));
+  $('#gprev').disabled=cur===0;$('#gnext').disabled=cur===PICS.length-1;
+  gmain.classList.remove('zoom');
+  if($('#lb').classList.contains('on'))lbv.innerHTML=PICS[cur].html;
+}
+thumbs.forEach(b=>b.addEventListener('click',()=>show(+b.dataset.i)));
+$('#gprev').addEventListener('click',()=>show(cur-1));$('#gnext').addEventListener('click',()=>show(cur+1));
+// lupa: clique alterna zoom 2,2× no ponto clicado; mover o mouse acompanha
+const aim=e=>{const r=view.getBoundingClientRect();gmain.style.setProperty('--zx',((e.clientX-r.left)/r.width*100)+'%');gmain.style.setProperty('--zy',((e.clientY-r.top)/r.height*100)+'%')};
+view.addEventListener('click',e=>{aim(e);gmain.classList.toggle('zoom')});
+view.addEventListener('mousemove',e=>{if(gmain.classList.contains('zoom'))aim(e)});
+view.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'){show(cur-1);e.preventDefault()}else if(e.key==='ArrowRight'){show(cur+1);e.preventDefault()}else if(e.key==='Enter'||e.key===' '){openLb();e.preventDefault()}});
+let sx=null;view.addEventListener('touchstart',e=>{sx=e.touches[0].clientX},{passive:true});
+view.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)show(cur+(dx<0?1:-1));sx=null});
+const lb=$('#lb');let lastFocus=null;
+function openLb(){lastFocus=document.activeElement;lb.classList.add('on');lbv.innerHTML=PICS[cur].html;document.body.style.overflow='hidden';$('#lbx').focus()}
+function closeLb(){lb.classList.remove('on');document.body.style.overflow='';(lastFocus||$('#gzoom')).focus()}
+$('#gzoom').addEventListener('click',openLb);
+$('#lbx').addEventListener('click',closeLb);$('#lbp').addEventListener('click',()=>show(cur-1));$('#lbn').addEventListener('click',()=>show(cur+1));
+lb.addEventListener('click',e=>{if(e.target===lb)closeLb()});
+document.addEventListener('keydown',e=>{if(!lb.classList.contains('on'))return;
+  if(e.key==='Escape')closeLb();else if(e.key==='ArrowLeft')show(cur-1);else if(e.key==='ArrowRight')show(cur+1);
+  else if(e.key==='Tab'){const f=[...lb.querySelectorAll('button:not(:disabled)')],i=f.indexOf(document.activeElement);if(e.shiftKey&&i<=0){f[f.length-1].focus();e.preventDefault()}else if(!e.shiftKey&&i===f.length-1){f[0].focus();e.preventDefault()}}});
+show(0);
+
+/* ---------- compra ---------- */
+const qty=$('#qty'),clampQ=v=>Math.max(1,Math.min(P.qty&&P.qty<40?P.qty:10,v|0||1));
+$('#qMinus').onclick=()=>{qty.value=clampQ(+qty.value-1)};$('#qPlus').onclick=()=>{qty.value=clampQ(+qty.value+1)};
+qty.addEventListener('change',()=>{qty.value=clampQ(+qty.value)});
+function addCart(){const n=clampQ(+qty.value);LX.addCart(n);toast(`${n>1?n+' unidades adicionadas':'Adicionado'} ao carrinho: ${short.split(',')[0]}`)}
+$('#buy').addEventListener('click',addCart);$('#mbuyBtn').addEventListener('click',addCart);
+
+/* ---------- frete (simulado no navegador: o CEP não sai daqui) ---------- */
+$('#cep').addEventListener('input',e=>{const d=e.target.value.replace(/\D/g,'').slice(0,8);e.target.value=d.length>5?d.slice(0,5)+'-'+d.slice(5):d});
+$('#freteForm').addEventListener('submit',e=>{e.preventDefault();const d=$('#cep').value.replace(/\D/g,''),out=$('#fopts');
+  if(d.length!==8){out.innerHTML='<li>Digite um CEP com 8 números.</li>';return}
+  const r=+d[0],sulSud=r<=3||r>=8,far=r===6||r===7,days=sulSud?3:far?8:6;
+  const eco=P.frete&&sulSud?0:(sulSud?24.9:far?49.9:39.9);
+  out.innerHTML=`<li><span>Econômica · até ${days+4} dias úteis</span><b>${eco?brl(eco):'Grátis'}</b></li><li><span>Expressa · até ${days} dias úteis</span><b>${brl(eco+29.9)}</b></li>`});
+
+/* ---------- favoritos e compartilhar (só neste navegador) ---------- */
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+const fav=$('#fav'),favKey='lx-fav-'+P.sku;
+const setFav=on=>{fav.setAttribute('aria-pressed',on);fav.querySelector('span').textContent=on?'Favoritado':'Favoritar'};
+setFav(store.get(favKey)==='1');
+fav.addEventListener('click',()=>{const on=fav.getAttribute('aria-pressed')!=='true';setFav(on);on?store.set(favKey,'1'):store.del(favKey);toast(on?'Adicionado aos favoritos':'Removido dos favoritos')});
+$('#copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(location.href);toast('Link do produto copiado')}catch(e){toast('Não foi possível copiar o link')}});
+$('#share').addEventListener('click',async()=>{if(navigator.share){try{await navigator.share({title:P.name,url:location.href})}catch(e){}}else{try{await navigator.clipboard.writeText(location.href);toast('Link do produto copiado')}catch(e){}}});
+$('#rate').onclick=()=>toast('Avaliação de exemplo: disponível depois da compra');
+
+/* ---------- ofertas parecidas e mais ofertas (mesmo catálogo de exemplo da home) ---------- */
+const pool=Array.from({length:LX.CATALOG.length||240},()=>product());
+const same=pool.filter(p=>p.cat===P.cat&&p.sku!==P.sku).sort((a,b)=>b.off-a.off);
+const others=pool.filter(p=>p.cat!==P.cat).sort((a,b)=>b.off-a.off);
+// Poucos itens na categoria: completa com ofertas de outras.
+$('#similar').innerHTML=[...same,...others].slice(0,4).map(p=>card(p)).join('');
+$('#more').innerHTML=others.filter((p,i,a)=>a.findIndex(x=>x.cat===p.cat)===i).slice(0,4).map(p=>card(p)).join('');
+
+/* ---------- vistos recentemente (só neste navegador; dá para limpar) ---------- */
+let hist=[];try{hist=JSON.parse(store.get('lx-hist')||'[]')}catch(e){}
+hist=[{id:P.sku,n:short,href:location.pathname.split('/').pop()+location.search,img:P.img||''},...hist.filter(h=>h&&h.id!==P.sku)].slice(0,10);
+store.set('lx-hist',JSON.stringify(hist));
+const drawHist=()=>{$('#hgrid').innerHTML=hist.length?hist.map(h=>`<a class="hcard" href="${esc(h.href)}"><div class="hi">${h.img?`<img src="${esc(h.img)}" alt="" width="180" height="180" loading="lazy">`:'<div class="ph" style="width:100%;height:100%"><span>IMG</span></div>'}</div><p>${esc(h.n)}</p></a>`).join(''):'<p class="hnote">Nenhum produto no histórico.</p>'};
+drawHist();
+$('#hclear').onclick=()=>{hist=[];store.del('lx-hist');drawHist();toast('Histórico apagado')};
+
+/* ---------- barra de compra no celular: preço e COMPRAR sempre à mão enquanto o botão principal está fora da tela ---------- */
+// Checado na rolagem (e não por IntersectionObserver): um salto de rolagem que não cruza o botão deixaria a barra no estado errado.
+const mbuy=$('#mbuy'),buyBtn=$('#buy');let mbOn=null,mbRaf=0;
+const mbCheck=()=>{mbRaf=0;const r=buyBtn.getBoundingClientRect(),on=r.bottom<0||r.top>innerHeight;if(on===mbOn)return;mbOn=on;
+  mbuy.classList.toggle('on',on);mbuy.setAttribute('aria-hidden',!on);$('#mbuyBtn').tabIndex=on?0:-1;document.body.classList.toggle('mb-on',on)};
+const mbQ=()=>{mbRaf||(mbRaf=requestAnimationFrame(mbCheck))};addEventListener('scroll',mbQ,{passive:true});addEventListener('resize',mbQ);mbCheck();
+LX.tick();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,926 @@
+[
+  {
+    "arquivo": "assets/img/apps/applestore.svg",
+    "original": "https://www.pichau.com.br/images/applestore.svg",
+    "alt": "Apple Store",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/apps/playstore.svg",
+    "original": "https://www.pichau.com.br/images/playstore.svg",
+    "alt": "Play Store",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/empresas/pichau-empresas.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Pichau_Empresas_-_1450x140.png",
+    "alt": "Comprar Empresas",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/empresas/pichau-energy-drink.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Filete_Site_Pichau_Energy_Drink_-_1488x100.webp",
+    "alt": "Home Meio Empresas",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/banner-duplo-01-amd-cpu.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/2026_-_23_a_30_out_AMD_CPU_-_736x100.webp",
+    "alt": "Homepage 2 Banners",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/banner-duplo-02-nvidia-v1.jpg",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/2026_-_23_a_30_out_NVIDIA_736x100_V1.webp",
+    "alt": "Homepage 2 Banners",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/banner-secundario-pc-gamer-halloween.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/2026_-_16_a_30_out_PC_Gamer_Halloween_1488x100.webp",
+    "alt": "Banner Promoção HOME secundário",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/hero-principal-hallopruumo.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/2026_-_16_a_30_out_HalloPruumo_1980x320.webp",
+    "alt": "Promoção Pichau",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-01-sandisk-optimus.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Filete_Sandisk_Optimus.jpg.jpeg",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-02-nvidia-upgrade-geforce-rtx.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Filete_Nvidia_Upgrade_Geforce_RTX_-_900x100.jpg.jpeg",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-03-amd-bundle-onimusha-v2.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Filete_AMD_-_Bundle_Onimusha_900x100_V2.webp",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-04-logitech.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Banner_Rotativo_900x100_Logitech.jpg.jpeg",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-05-nvidia-holidays.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/Filete_Rotativo_900x100_Nvidia_Holidays.jpg",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/index/slider/slider-06-amd-level-up-set-26.webp",
+    "original": "https://media.pichau.com.br/media/aw_rbslider/slides/AMD_Level_Up_set_26_900x100.jpg.jpeg",
+    "alt": "SLIDER - HOME - 01",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/banners/promocao/cupom-desconto.webp",
+    "original": "https://www.pichau.com.br/images/coupon/cupom-desconto.webp",
+    "alt": "Cupom PRUMO10OFF",
+    "pagina_origem": "promocao-cupons"
+  },
+  {
+    "arquivo": "assets/img/categorias/cadeiras-e-mesas-gamer-e-escritorio.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/6_-_Categorias_site_-_Cadeiras_Mesas_Gamer_e_Escrit_rio.png",
+    "alt": "Cadeiras e Mesas Gamer e Escritório",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/casa-e-lazer.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/14_-_Categorias_site_-_Casa_e_Lazer.png",
+    "alt": "Casa e Lazer",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/casa-inteligente.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/13_-_Categorias_site_-_Casa_Inteligente.png",
+    "alt": "Casa Inteligente",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/computadores.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/3_-_Categorias_site_-_Computadores.png",
+    "alt": "Computadores",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/eletronicos.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/7_-_Categorias_site_-_Eletr_nicos.png",
+    "alt": "Eletronicos",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/energetico.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/18_-_Categorias_site_-_Energ_tico.png",
+    "alt": "Energético",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/hardware.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/1_-_Categorias_site_-_Hardware_1.png",
+    "alt": "Hardware",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/kit-upgrade.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/4_-_Categorias_site_-_Kit_Upgrade.png",
+    "alt": "Kit Upgrade",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/mochilas.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/9_-_Categorias_site_-_Mochilas.png",
+    "alt": "Mochilas",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/monitores.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/5_-_Categorias_site_-_Monitores.png",
+    "alt": "Monitores",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/notebooks-e-portateis.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/8_-_Categorias_site_-_Notebooks_e_Port_teis.png",
+    "alt": "Notebooks e Portáteis",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/openbox.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/15_-_Categorias_site_-_Openbox.png",
+    "alt": "Openbox",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/perifericos.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/2_-_Categorias_site_-_Perif_ricos.png",
+    "alt": "Periféricos",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/pets.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/16_-_Categorias_site_-_Pets.png",
+    "alt": "Pets",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/redes-e-wireless.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/11_-_Categorias_site_-_Redes_e_Wireless.png",
+    "alt": "Redes e Wireless",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/vestuario.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/17_-_Categorias_site_-_Vestu_rio.png",
+    "alt": "Vestuario",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/categorias/video-games.png",
+    "original": "https://www.pichau.com.br/media/catalog/category/10_-_Categorias_site_-_V_deo_Games.png",
+    "alt": "Video Games",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/icones/gaming-white.webp",
+    "original": "https://www.pichau.com.br/images/icon-gaming-white.png",
+    "alt": "Pichau Gamer",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/icones/monte-white.webp",
+    "original": "https://www.pichau.com.br/images/icon-monte-white.png",
+    "alt": "Monte Seu Pc",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/icones/pichau-white.webp",
+    "original": "https://www.pichau.com.br/images/icon-pichau-white.png",
+    "alt": "Pichau home",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/icones/workstation.webp",
+    "original": "https://www.pichau.com.br/images/icon-workstation.png",
+    "alt": "Pichau Workstation",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/logo/favicon.ico",
+    "original": "https://www.pichau.com.br/favicon.ico",
+    "alt": "favicon",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/logo/logo-pichau.webp",
+    "original": "https://www.pichau.com.br/logo-pichau-2021-dark.png",
+    "alt": "Pichau",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/mascote/pru-ocioso.webp",
+    "original": "https://www.pichau.com.br/images/pru/ocioso.webp",
+    "alt": "",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/mascote/pru-olhar-centro.webp",
+    "original": "https://www.pichau.com.br/images/pru/olhar-centro.webp",
+    "alt": "",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/american.png",
+    "original": "https://www.pichau.com.br/images/american.png",
+    "alt": "Amex",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/boleto.png",
+    "original": "https://www.pichau.com.br/images/boleto.png",
+    "alt": "Boleto",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/mastercard.png",
+    "original": "https://www.pichau.com.br/images/mastercard.png",
+    "alt": "Mastercard",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/nubank.svg",
+    "original": "https://www.pichau.com.br/images/nubank.svg",
+    "alt": "Nubank",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/pix.png",
+    "original": "https://www.pichau.com.br/images/pix.png",
+    "alt": "PIX",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/pagamento/visa.png",
+    "original": "https://www.pichau.com.br/images/visa.png",
+    "alt": "Visa",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/antena-de-internet-starlink-mini-x-internet-via-satelite-r.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/0/2/02535308-501.jpg",
+    "alt": "Antena de Internet Starlink Mini X, Internet Via Satelite, R",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-gamer-pichau-omega-s-onix-pg-omgs-onix.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-omgs-onixv255554522147.jpg",
+    "alt": "Cadeira Gamer Pichau Omega S, Onix, PG-OMGS-ONIX",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-gamer-tgt-heron-tc2-preto-e-cinza-tgt-hrtc-bl03.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/g/tgt-hrtc-bl033.jpg",
+    "alt": "Cadeira Gamer TGT Heron TC2, Preto e Cinza, TGT-HRTC-BL03",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-office-zinnia-dax-braco-2d-espuma-moldada-cinza.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-dax-gy2.jpg",
+    "alt": "Cadeira Office Zinnia Dax, Braco 2D, Espuma Moldada, Cinza, ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-office-zinnia-dax-braco-2d-espuma-moldada-preta.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-dax-bk232.jpg",
+    "alt": "Cadeira Office Zinnia Dax, Braco 2D, Espuma Moldada, Preta, ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-office-zinnia-hera-l-preto-zno-hral-bk02.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-hral-bk024.jpg",
+    "alt": "Cadeira Office Zinnia Hera L, Preto, ZNO-HRAL-BK02",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cadeira-pichau-office-lyse-full-mesh-braco-5d-base-alumin.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-lys-gy2_1.jpg",
+    "alt": "Cadeira Pichau Office Lyse, Full Mesh, Braco 5D, Base Alumín",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/camiseta-oversized-pichau-originals-cyber-synth-cms-pg-cybe.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/y/cyber_synth_1_jpg.jpg",
+    "alt": "Camiseta Oversized Pichau Originals Cyber Synth, CMS-PG-CYBE",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/camiseta-oversized-pichau-originals-reborn-cms-pg-reborn.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/r/e/reborn_1_jpg.jpg",
+    "alt": "Camiseta Oversized Pichau Originals Reborn, CMS-PG-REBORN",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/combo-gamer-pichau-netuno-4x1-rainbow-teclado-abnt2-mous.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-ntn-rbw011227.jpg",
+    "alt": "Combo Gamer Pichau Netuno 4x1, Rainbow,  Teclado ABNT2, Mous",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/computador-gamer-completo-pichau-lamia-v-amd-ryzen-5-3400g.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kit-pc-completo-ryan-scadeira-mancer-hexer-ariete-001_2.jpg",
+    "alt": "Computador Gamer Completo Pichau Lamia V, AMD Ryzen 5 3400G,",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/computador-gamer-pichau-fenrir-iv-amd-ryzen-5-5500-radeon.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-pichau-hexer-gpu-m-001_12.jpg",
+    "alt": "Computador Gamer Pichau Fenrir IV, AMD Ryzen 5 5500, Radeon ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/computador-gamer-pichau-gd200-intel-core-i7-radeon-rx-580.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-acegeek-stratus-preto-gpu-m-001_6.jpg",
+    "alt": "Computador Gamer Pichau GD200, Intel Core i7, Radeon RX 580 ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/controle-gamer-mancer-rcw99-pro-hall-effect-nintendo-switc.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-rcw99p-w01v554553.jpg",
+    "alt": "Controle Gamer Mancer RCW99 PRO, Hall Effect, Nintendo Switc",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cooler-para-processador-deepcool-ak620-g2-digital-nyx-120mm.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/r/-/r-ak620g2-bknnmn-gjd-1.jpg",
+    "alt": "Cooler Para Processador DeepCool AK620 G2 Digital Nyx, 120mm",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/copo-termico-pichau-zero-600ml-azul-e-vermelho-pg-hhr100.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-hhr100-rb024.jpg",
+    "alt": "Copo Termico Pichau Zero, 600ml, Azul e Vermelho, PG-HHR100-",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/cupom-ff10.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/p/g/pg-ffws-by1642.jpg",
+    "alt": "Cupom ff10",
+    "pagina_origem": "promocao-cupons"
+  },
+  {
+    "arquivo": "assets/img/produtos/cupom-skrp10.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/74c1057f7991b4edb2bc7bdaa94de933/p/g/pg-omgs-skrpv545555.jpg",
+    "alt": "Cupom SKRP10",
+    "pagina_origem": "promocao-cupons"
+  },
+  {
+    "arquivo": "assets/img/produtos/energetico-pichau-acai-zero-350ml-pch-eng-acai-zero-un.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-eng-acai-zero-un255.jpg",
+    "alt": "Energetico Pichau Açai Zero, 350ml, PCH-ENG-ACAI-ZERO-UN",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/energetico-pichau-protein-black-cherry-zero-350ml-pch-eng.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-eng-probc-zero-un1.jpg",
+    "alt": "Energetico Pichau Protein Black Cherry Zero, 350ml, PCH-ENG-",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/extensor-de-tela-duplo-para-notebook-zinnia-vision-pro-14-p.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-vzonpro-bl02v5296461214.jpg",
+    "alt": "Extensor de Tela Duplo Para Notebook Zinnia Vision Pro, 14 P",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/fone-de-ouvido-kz-ed9-pro-sem-microfone-preto-kz-ed9pro-b.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/z/kz-ed9pro-bk.jpg",
+    "alt": "Fone de Ouvido KZ ED9 Pro, Sem Microfone, Preto, KZ-ED9PRO-B",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/fonte-asus-rog-strix-1200w-platinum-1200w-80-plus-platinum.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/r/o/rog-strix-1200p-gaming-e415559.jpg",
+    "alt": "Fonte ASUS ROG Strix 1200W Platinum, 1200W, 80 Plus Platinum",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/fonte-corsair-rm750e-750w-full-modular-atx-3-1-pcie-5-1.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/p/cp-9020295-br5.jpg",
+    "alt": "Fonte Corsair RM750e, 750W, Full-Modular, ATX 3.1, PCIe 5.1,",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/fonte-thermalright-tr-kg650-650w-atx-3-1-pcie-5-0-80-plu.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/r/tr-kg6502.jpg",
+    "alt": "Fonte Thermalright TR-KG650, 650W, ATX 3.1, PCIe 5.0, 80 Plu",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/gabinete-gamer-corsair-frame-4000d-rs-argb-mid-tower-late.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/c/cc-9011326-ww.jpg",
+    "alt": "Gabinete Gamer Corsair Frame 4000D RS, ARGB, Mid-Tower, Late",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/gabinete-gamer-pichau-cypher-mid-tower-lateral-de-vidro-p.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-cph-bk0051250204.jpg",
+    "alt": "Gabinete Gamer Pichau Cypher, Mid-Tower, Lateral de Vidro, P",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/gabinete-gamer-pichau-osiris-mini-tower-lateral-de-vidro.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-osi-bk1222123.jpg",
+    "alt": "Gabinete Gamer Pichau Osiris, Mini-Tower, Lateral de Vidro, ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/gabinete-gamer-pichau-osiris-pro-mid-tower-lateral-de-vidr.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-osip-bk3.jpg",
+    "alt": "Gabinete Gamer Pichau Osiris PRO, Mid-Tower, Lateral de Vidr",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/kit-chave-de-precisao-eletrica-pichau-fenda-parafusadeira-6.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-kit68-gr015551.jpg",
+    "alt": "Kit Chave de Precisao Eletrica Pichau, Fenda Parafusadeira 6",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/kit-ventoinha-pichau-ventus-nx-argb-3x120mm-branco-pch-v.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-vtnx3-wh0114552.jpg",
+    "alt": "Kit Ventoinha Pichau Ventus NX, ARGB, 3x120mm, Branco, PCH-V",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/kit-ventoinha-pichau-ventus-nx-argb-5x120mm-branco-pch-v.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-vtnx5-wh01122002.jpg",
+    "alt": "Kit Ventoinha Pichau Ventus NX, ARGB, 5x120mm, Branco, PCH-V",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/kit-ventoinha-pichau-ventus-nx-reverse-argb-3x120mm-branc.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-vtnxr3-wh01251223.jpg",
+    "alt": "Kit Ventoinha Pichau Ventus NX Reverse, ARGB, 3x120mm, Branc",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/memoria-team-group-t-force-vulcan-z-8gb-1x8gb-ddr4-3200.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/l/tlzgd48g3200hc16f01.jpg",
+    "alt": "Memoria Team Group T-Force Vulcan Z, 8GB (1x8GB), DDR4, 3200",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mesa-digitalizadora-zinnia-momentum-mt40-5080lpi-niveis-de.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/znc-znmt40-bl011550004.jpg",
+    "alt": "Mesa Digitalizadora Zinnia Momentum MT40, 5080LPI, Niveis de",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mesa-gamer-mancer-arcane-140cm-rgb-preto-mcr-arc-rgb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-arc-rgb6445545v651.jpg",
+    "alt": "Mesa Gamer Mancer Arcane, 140cm, RGB, Preto, MCR-ARC-RGB",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mesa-para-escritorio-zinnia-aurea-a180-vidro-temperado-180.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-ara-bk035.jpg",
+    "alt": "Mesa para Escritorio Zinnia Aurea A180, Vidro Temperado, 180",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/microfone-mancer-horcrux-pft-rgb-usb-preto-mcr-hcrpft-bl.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-hcrpft-bl0189723.jpg",
+    "alt": "Microfone Mancer Horcrux PFT, RGB, USB, Preto, MCR-HCRPFT-BL",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mini-supercomputador-gigabyte-ai-top-atom-atagb10-nvidia-gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/2/4/24fp0-ata9000usa10pr7.jpg",
+    "alt": "Mini Supercomputador Gigabyte Ai Top Atom ATAGB10, NVIDIA GB",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-aoc-agon-cs2-25-24-5-pol-ips-fhd-0-3ms-31.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/s/cs25g000.jpg",
+    "alt": "Monitor Gamer AOC Agon CS2 25, 24.5 Pol, IPS, FHD, 0.3ms, 31",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-aoc-agon-quad-27-27-pol-ips-qhd-0-5ms-180.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/q/2/q27g4f126552.jpg",
+    "alt": "Monitor Gamer AOC Agon Quad 27, 27 Pol, IPS, QHD, 0.5ms, 180",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-asus-tuf-gaming-vg279qm5a-27-pol-fast-ips-f.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/v/g/vg279qm5a1552222.jpg",
+    "alt": "Monitor Gamer Asus TUF Gaming VG279QM5A, 27 Pol, Fast IPS, F",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-gigabyte-aorus-fo27q5p-27-pol-qd-oled-qhd.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/o/aorus-fo27q5p0000.jpg",
+    "alt": "Monitor Gamer Gigabyte Aorus FO27Q5P, 27 Pol, QD-OLED, QHD, ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-mancer-valak-zx182-27-pol-va-curvo-fhd-1m.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-vzx182-bl012121202.jpg",
+    "alt": "Monitor Gamer Mancer Valak ZX182, 27 Pol, VA, Curvo, FHD, 1m",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-msi-mag-24-5-pol-ips-fhd-0-5ms-240hz-ada.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/a/mag-255f-x24415522.jpg",
+    "alt": "Monitor Gamer MSI Mag, 24.5 Pol, IPS, FHD, 0.5ms, 240Hz, Ada",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-msi-mag-27-pol-rapid-ips-wqhd-0-5ms-240hz.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/a/mag-274qf-x24.jpg",
+    "alt": "Monitor Gamer MSI MAG, 27 Pol, Rapid IPS, WQHD, 0.5ms, 240Hz",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/monitor-gamer-pichau-athen-v4b-23-8-pol-va-fhd-1ms-144h.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-ath24v4b-bl013.jpg",
+    "alt": "Monitor Gamer Pichau Athen V4B, 23.8 Pol, VA, FHD, 1ms, 144H",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mouse-ajazz-aj159p-12000dpi-6-botoes-wireless-preto-aj1.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/j/aj159p-mc-bkv1454553.jpg",
+    "alt": "Mouse Ajazz AJ159P, 12000DPI, 6 Botoes, Wireless, Preto, AJ1",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mouse-gamer-ajazz-aj179p-mc-18000dpi-6-botoes-wireless-b.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/j/aj179p-mc-wh1.jpg",
+    "alt": "Mouse Gamer Ajazz AJ179P MC, 18000DPI, 6 Botoes, Wireless, B",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/mouse-gamer-redragon-storm-rgb-12400dpi-preto-m808-rgb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/8/m808-rgbv56765222.jpg",
+    "alt": "Mouse Gamer Redragon Storm RGB 12400DPI Preto, M808-RGB",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-completo-mancer-draco-ii-amd-ryzen-3-3200g-8gb-ddr4-ss.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pc-completo-jester-v2-ryan-scadeira-pichau-004.jpg",
+    "alt": "PC Completo Mancer Draco II, AMD RYZEN 3 3200G, 8GB DDR4, SS",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-completo-pichau-fenrir-iii-amd-ryzen-5-5500-radeo.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-gladiator-gpu-m_monitor_ariete.jpg",
+    "alt": "PC Gamer Completo Pichau Fenrir III, AMD Ryzen 5 5500, Radeo",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-completo-pichau-isis-viii-amd-ryzen-5-5500-geforc.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-completo-mancer-cv450-pichau-01.jpg",
+    "alt": "PC Gamer Completo Pichau Ísis VIII, AMD Ryzen 5 5500, GeForc",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-mancer-krampus-amd-ryzen-5-5500-geforce-rtx-3060.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-gpu-pichau-magpie-4b-001_2_7.jpg",
+    "alt": "PC Gamer Mancer Krampus, AMD Ryzen 5 5500, GeForce RTX 3060 ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-abaddon-amd-ryzen-5-5500-radeon-rx-7600-8g.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-pichau-hexer-gpu-m-001_1_1.jpg",
+    "alt": "PC Gamer Pichau Abaddon, AMD Ryzen 5 5500, Radeon RX 7600 8G",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-afrodite-amd-ryzen-5-5500-geforce-rtx-3060.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-pichau-hexer-gpu-m-bk-001_5_17.jpg",
+    "alt": "PC Gamer Pichau Afrodite, AMD Ryzen 5 5500, GeForce RTX 3060",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-amd-ryzen-7-5700x-geforce-rtx-3060-12gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-apus-rgb-cgpu-m_dia-001_4_12.jpg",
+    "alt": " PC Gamer Pichau, AMD Ryzen 7 5700X, GeForce RTX 3060 12GB, ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-amd-ryzen-7-5700x-geforce-rtx-5060-8gb-16.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/p/apus-rgb-water-240mm-gpu-g-pc-001_7.jpg",
+    "alt": "PC Gamer Pichau, AMD Ryzen 7 5700X, GeForce RTX 5060 8GB, 16",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-amd-ryzen-7-5700x-radeon-rx-7600-8gb-16gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/p/apus-rgb-water-240mm-gpu-g-pc-001_3.jpg",
+    "alt": "PC Gamer Pichau, AMD Ryzen 7 5700X, Radeon RX 7600 8GB, 16GB",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-cratos-iii-amd-ryzen-7-5700x-geforce-rtx-5.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-mancer-hemlok-001_1.jpg",
+    "alt": "PC Gamer Pichau Cratos III, AMD Ryzen 7 5700X, GeForce RTX 5",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-fenrir-ii-amd-ryzen-5-5500-radeon-rx-580-8.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-pichau-hexer-gpu-m-001_11.jpg",
+    "alt": "PC Gamer Pichau Fenrir II, AMD Ryzen 5 5500, Radeon RX 580 8",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-helheim-intel-i5-12400f-geforce-rtx-5050-8.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/w/a/ward-v3-gpu-p-cf-001_10.jpg",
+    "alt": "PC Gamer Pichau Helheim, Intel i5-12400F, GeForce RTX 5050 8",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-incubo-amd-ryzen-5-5500-geforce-rtx-5050-8.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-pichau-hexer-gpu-m-001_10.jpg",
+    "alt": "PC Gamer Pichau Íncubo, AMD Ryzen 5 5500, GeForce RTX 5050 8",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-isis-vi-amd-ryzen-5-5500-geforce-rtx-5060.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-gpu-pichau-magpie-4b-001_1_36.jpg",
+    "alt": "PC Gamer Pichau Ísis VI, AMD Ryzen 5 5500, GeForce RTX 5060 ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-juno-ii-intel-i5-12400f-geforce-rtx-3060-1.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-gpu-pichau-magpie-4b-001_11.jpg",
+    "alt": "PC Gamer Pichau Juno II, Intel i5-12400F, GeForce RTX 3060 1",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-lamia-amd-ryzen-5-3400g-8gb-ddr4-ssd-240g.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/g/a/gabinete-gamer-pichau-atom-x-rgb-001.jpg",
+    "alt": "PC Gamer Pichau Lamia, AMD Ryzen 5 3400G, 8GB DDR4, SSD 240G",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-lamia-ii-amd-ryzen-5-3400g-16gb-ddr4-ssd.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-pichau-magpie-4b-001_3.jpg",
+    "alt": "PC Gamer Pichau Lamia II, AMD Ryzen 5 3400G, 16GB DDR4, SSD ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-lamia-iii-amd-ryzen-5-3400g-16gb-ddr4-ssd.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-acegeek-stratus-preto-sgpu-001_4.jpg",
+    "alt": "PC Gamer Pichau Lamia III, AMD Ryzen 5 3400G, 16GB DDR4, SSD",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-msi-mlg-amd-ryzen-7-7800x3d-geforce-rtx-50.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/g/a/gabinete-gamer-msi-pano-130r-mlg-edition-001.jpg",
+    "alt": "PC Gamer Pichau MSI MLG, AMD Ryzen 7 7800X3D, GeForce RTX 50",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-ninigi-amd-ryzen-7-5700x-geforce-rtx-3070.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/p/apus-rgb-water-240mm-gpu-g-pc-001_16.jpg",
+    "alt": "Pc Gamer Pichau Ninigi, AMD Ryzen 7 5700X, GeForce RTX 3070 ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-gamer-pichau-osiris-intel-i5-12400f-radeon-rx-6600-8gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/o/computador-gamer-gpu-pichau-magpie-4b-001_13.jpg",
+    "alt": "PC Gamer Pichau Osíris, Intel i5-12400F, Radeon RX 6600 8GB,",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-home-pichau-hm180-amd-ryzen-3-3200g-16gb-ddr4-ssd-240g.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/1/z10-01-teclado-mouse_2_8.jpg",
+    "alt": "PC Home Pichau HM180, AMD Ryzen 3 3200G, 16GB DDR4, SSD 240G",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-home-pichau-hm758-amd-ryzen-5-3400g-8gb-ddr4-ssd-120gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-home-pichau-tgt-b130-teclado-mouse_1_6.jpg",
+    "alt": "PC Home Pichau HM758, AMD Ryzen 5 3400G, 8GB DDR4, SSD 120GB",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-home-pichau-hm759-amd-ryzen-5-3400g-8gb-ddr4-ssd-240gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/g/tgt-b120-teclado-mouse_1_2.jpg",
+    "alt": "PC Home Pichau HM759, AMD Ryzen 5 3400G, 8GB DDR4, SSD 240GB",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pc-mancer-draco-ii-amd-ryzen-3-3200g-8gb-ddr4-ssd-240gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/a/-/a-pc-jester-v2-sgpu-001_9.jpg",
+    "alt": "PC Mancer Draco II, AMD RYZEN 3 3200G, 8GB DDR4, SSD 240GB ",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pichau-kit-upgrade-amd-ryzen-3-3200g-a520m-ddr4-8gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kit-r3-3-mcr-a520m-dxv2-2slots-memoria-0010.jpg",
+    "alt": "Pichau Kit upgrade, AMD Ryzen 3 3200G, A520M DDR4, 8GB",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pichau-kit-upgrade-amd-ryzen-5-5500-b450m-steel-legend-ddr.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kit-r5-serie-5-b450m-ddr4-steel-legend-002_2.jpg",
+    "alt": "Pichau Kit upgrade, AMD Ryzen 5 5500, B450M Steel Legend DDR",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pichau-kit-upgrade-amd-ryzen-7-5700x-b450m-steel-legend-dd.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kit-r7-serie-5-b450m-ddr4-steel-legend-002_2__1.jpg",
+    "alt": "Pichau Kit upgrade, AMD Ryzen 7 5700X, B450M Steel Legend DD",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/pichau-kit-upgrade-amd-ryzen-7-5700x-b550m-aorus-elite-ddr.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kiy-up-r7-b550m-aorus-elite-001.jpg",
+    "alt": "Pichau Kit upgrade, AMD Ryzen 7 5700X, B550M Aorus Elite DDR",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/pichau-kit-upgrade-amd-ryzen-7-5700x-b550m-ddr4-16gb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/k/i/kit-r7-5-b550m-generica-2slots-ddr4-memoria-1011100.jpg",
+    "alt": "Pichau Kit upgrade, AMD Ryzen 7 5700X, B550M DDR4, 16GB",
+    "pagina_origem": "promocao-halloween"
+  },
+  {
+    "arquivo": "assets/img/produtos/placa-de-video-xfx-radeon-rx-7600-speedster-swft210-8gb-gd.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/r/x/rx-76pswftfy5.jpg",
+    "alt": "Placa de Video XFX Radeon RX 7600 Speedster SWFT210, 8GB, GD",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/placa-mae-asus-tuf-gaming-b650m-e-wifi-ddr5-socket-amd-am5.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/u/tuf-gaming-b650m-e-wifiv6354213.jpg",
+    "alt": "Placa Mae Asus Tuf Gaming B650M-E WIFI, DDR5, Socket AMD AM5",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/placa-mae-pichau-orion-b850m-ddr5-socket-am5-m-atx-pch-b.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-b850m-orn24.jpg",
+    "alt": "Placa Mãe Pichau Orion B850M, DDR5, Socket AM5, M-ATX, PCH-B",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/pokemon-tcg-mega-evolution-pitch-black-build-battle-box.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/k/pkm1871_1.jpg",
+    "alt": "Pokémon TCG, Mega Evolution Pitch Black, Build & Battle Box,",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/poltrona-gamer-pichau-ac50-caramel-pg-plna-cml.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-plna-cml2.jpg",
+    "alt": "Poltrona Gamer Pichau AC50, Caramel, PG-PLNA-CML",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/prateleira-multiuso-de-streaming-para-monitor-zinnia-core-a.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-stcor-bl01-v245541.jpg",
+    "alt": "Prateleira Multiuso de Streaming Para Monitor Zinnia Core, A",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/processador-amd-ryzen-5-5500-6-core-12-threads-3-6ghz-4.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/1/0/100-100000457box1.jpg",
+    "alt": "Processador AMD Ryzen 5 5500, 6-Core, 12-Threads, 3.6GHz (4.",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/processador-amd-ryzen-5-7600x3d-6-core-12-threads-4-1ghz.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/1/0/100-100001721wof.jpg",
+    "alt": "Processador AMD Ryzen 5 7600X3D, 6-Core, 12-Threads, 4.1GHz ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/processador-amd-ryzen-7-5800x3d-8-core-16-threads-3-4ghz.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/1/0/100-100000651pof2.jpg",
+    "alt": "Processador AMD Ryzen 7 5800X3D, 8-Core, 16-Threads, 3.4GHz ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/raquete-padel-pro-pichau-vesper-warrior-18k-carbon-gota-pe.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/e/pes-rkt-vsp455222.jpg",
+    "alt": "Raquete Padel Pro Pichau Vesper Warrior 18K Carbon, Gota, PE",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/ssd-lexar-nm790-512gb-m-2-2280-pcie-nvme-leitura-7200mb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/l/n/lnm790x512g-rnnng2.jpg",
+    "alt": "SSD Lexar NM790, 512GB, M.2 2280, PCIe NVMe, Leitura 7200MB/",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/ssd-sandisk-optimus-5100-500-gb-m-2-2280-pcie-nvme-leitu.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/s/d/sdsp51500gan-000e01.jpg",
+    "alt": "SSD Sandisk Optimus 5100, 500 GB, M.2 2280, PCIe NVMe, Leitu",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/suporte-articulado-com-pistao-a-gas-para-monitor-zinnia-nimb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-znnbo110-wh01-v22.jpg",
+    "alt": "Suporte Articulado Com Pistao a Gas Para Monitor Zinnia Nimb",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/suporte-articulado-para-dois-monitores-nbjohson-gs-mrz06-13.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/n/b/nb-gs-mrz06-wh.jpg",
+    "alt": "Suporte Articulado Para Dois Monitores Nbjohson GS-MRZ06, 13",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/suporte-articulado-para-monitor-pichau-serpens-17-pol-a-49.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/g/pg-srpgr-rgb017.jpg",
+    "alt": "Suporte Articulado Para Monitor Pichau Serpens, 17 Pol a 49 ",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/suporte-para-microfone-zinnia-g2-lift-baixo-perfil-articula.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-g2li-bl014.jpg",
+    "alt": "Suporte Para Microfone Zinnia G2 Lift, Baixo Perfil Articula",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/suporte-para-notebook-e-monitor-zinnia-snt10-zno-zsnt10-bl0.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/z/n/zno-zsnt10-bl01-v21122003.jpg",
+    "alt": "Suporte Para Notebook e Monitor Zinnia SNT10, ZNO-ZSNT10-BL0",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/teclado-mecanico-corsair-vanguard-96-rgb-switch-mlx-plasma.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/c/h/ch-91f901e-na.jpg",
+    "alt": "Teclado Mecanico Corsair Vanguard 96, RGB, Switch Mlx Plasma",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/teclado-mecanico-mancer-black-ghost-v3-rainbow-switch-huan.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-bkg-rbw035.jpg",
+    "alt": "Teclado Mecanico Mancer Black Ghost V3, Rainbow, Switch Huan",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/teclado-mecanico-solid-gear-adamantium-rgb-switch-outemu-a.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/-/t-1005.jpg",
+    "alt": "Teclado Mecanico Solid Gear Adamantium, RGB, Switch Outemu A",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/teclado-mecanico-tgt-sherman-v3-rainbow-abnt2-switch-huan.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/t/g/tgt-shr-rbw0302552.jpg",
+    "alt": "Teclado Mecanico TGT Sherman V3, Rainbow, ABNT2, Switch Huan",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/ventoinha-nzxt-f140rgb-core-140mm-branco-rf-c14sf-w1.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/r/f/rf-c14sf-w15.jpg",
+    "alt": "Ventoinha NZXT F140RGB CORE, 140mm, Branco, RF-C14SF-W1",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/ventoinha-pichau-ventus-nx-argb-120mm-branco-pch-vtn-wh0.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-vtn-wh01221122.jpg",
+    "alt": "Ventoinha Pichau Ventus NX, ARGB, 120mm, Branco, PCH-VTN-WH0",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/ventoinha-pichau-ventus-nx-reverse-argb-120mm-branco-pch.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/p/c/pch-vtnr-wh01v5422.jpg",
+    "alt": "Ventoinha Pichau Ventus NX Reverse, ARGB, 120mm, Branco, PCH",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/produtos/webcam-mancer-koldun-1080p-usb-rgb-mcr-kldn-rgb.webp",
+    "original": "https://media.pichau.com.br/media/catalog/product/cache/22c0d71a45cddf08af7927cb2bce3571/m/c/mcr-kldn-rgb2.jpg",
+    "alt": "Webcam Mancer Koldun, 1080p, USB, RGB, MCR-KLDN-RGB",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/selos/ebit.png",
+    "original": "https://newimgebit-a.akamaihd.net/ebitBR/selo/img_6261.png",
+    "alt": "",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/selos/google.png",
+    "original": "https://www.pichau.com.br/images/pichau-google.png",
+    "alt": "Google",
+    "pagina_origem": "index"
+  },
+  {
+    "arquivo": "assets/img/selos/site-blindado.svg",
+    "original": "https://seal.app.convisoappsec.com/seals/domain/www.pichau.com.br/seal.svg",
+    "alt": "",
+    "pagina_origem": "index"
+  }
+]

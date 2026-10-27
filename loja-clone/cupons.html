@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Cupons (réplica de layout)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Cupons de desconto ativos para hardware, periféricos e acessórios. Réplica de layout para estudo.">
+<meta name="theme-color" content="#303030">
+<meta name="color-scheme" content="dark light">
+<script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+:root{--cup:#4a4a4a;--code:#ffb8b8}:root[data-theme=light]{--cup:#fff;--code:#b3141b}
+.crumb{padding:4px 0 0;font-size:13px}
+h1.big{font-size:44px;font-weight:400;margin:14px 0 24px}
+.cban{height:280px;border-radius:12px;background:linear-gradient(90deg,#3b0a0e 0%,#7a1a1f 55%,#f3e2c2 100%)}
+.cban>img{left:auto;right:4%;width:auto;max-width:46%;object-fit:contain;padding:14px 0}
+.cban::after{display:none}
+.ativos{font-size:20px;font-weight:500;margin:26px 0 14px}
+.cgrid:empty{min-height:950px}   /* 7 cupons em 2 colunas; evita o texto de baixo pular */
+@media(max-width:760px){.cgrid:empty{min-height:1650px}}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px 16px}
+.cup{display:flex;background:var(--cup);border:1px solid var(--edge);border-radius:4px;min-height:220px}
+.cup .im{width:165px;flex:none;padding:40px 12px;border-right:1px dashed #a86060;display:flex;align-items:center}
+.cup .im .ph,.cup .im .ph-img{width:140px;height:140px;border-radius:4px;object-fit:cover}
+.cup .bd{flex:1;padding:50px 12px 16px;display:flex;flex-direction:column;justify-content:center}
+.cup .pc{font-size:18px;font-weight:700;color:var(--price)}
+.cup .ds{font-size:13px;color:var(--txt2);margin:6px 0 14px}
+.code{border:1px dashed var(--code);border-radius:20px;height:44px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:15px;font-weight:800;letter-spacing:1px;color:var(--code);cursor:pointer;transition:background .2s;background:none;width:100%}
+.code:hover{background:var(--hover)}
+.code.ok{color:var(--price);border-color:var(--price)}
+.vp{font-size:12px;text-decoration:underline;margin-top:8px}
+.seo{padding:40px 0 60px}
+.seo h2{font-size:52px;font-weight:400;line-height:1.15;margin:40px 0 28px}
+.seo p{font-size:14.5px;line-height:1.7;margin-bottom:18px;color:var(--txt2)}
+.seo ol{margin:0 0 18px 20px;font-size:14.5px;line-height:1.8}
+.faq details{border-bottom:1px solid var(--line);padding:16px 0}
+.faq summary{cursor:pointer;font-size:16px;font-weight:500}
+.faq details p{margin:10px 0 0}
+@media(max-width:760px){.cgrid{grid-template-columns:1fr}.seo h2{font-size:32px}h1.big{font-size:32px}.cban{height:160px}.cup .im{width:120px}.cup .im .ph,.cup .im .ph-img{width:96px;height:96px}}
+</style>
+</head>
+<body data-page="cupons">
+<div id="site-header"></div>
+<script src="assets/catalogo.js"></script>
+<script src="assets/common.js"></script>
+<main class="in">
+ <nav class="crumb" aria-label="Você está em"><a href="index.html">Home</a> &nbsp;/&nbsp; <b aria-current="page">Cupons</b></nav>
+ <h1 class="big">Cupons</h1>
+ <div class="cban bn"><img src="assets/img/banners/promocao/cupom-desconto.webp" alt="" width="480" height="303"><div class="bt"><b>Cupons</b><span>Garanta seu desconto em produtos selecionados</span></div></div>
+ <h2 class="ativos">ATIVOS</h2>
+ <div class="cgrid" id="cgrid"></div>
+
+ <section class="seo">
+  <h2>Cupons Loja Exemplo: economize no seu setup</h2>
+  <p><b>Vai montar ou atualizar seu computador?</b> Nesta página ficam reunidos todos os cupons ativos da loja. Eles valem para hardware, periféricos, acessórios e outras categorias, <b>e a lista é atualizada sempre que entra uma campanha nova.</b></p>
+  <p>Alguns cupons valem para a primeira compra, outros para frete ou para categorias específicas. <b>Vale conferir antes de fechar o pedido.</b></p>
+  <h2>Como usar um cupom?</h2>
+  <ol><li>Clique no código acima para copiá-lo.</li><li>Adicione os produtos ao carrinho.</li><li>No carrinho, cole o código no campo <b>“Cupom de desconto”</b> e clique em <b>Aplicar</b>.</li><li>O desconto aparece no total antes do pagamento.</li></ol>
+  <h2>Perguntas frequentes</h2>
+  <div class="faq">
+   <details><summary>Posso usar mais de um cupom no mesmo pedido?</summary><p>Texto de exemplo: em geral é permitido um cupom por pedido.</p></details>
+   <details><summary>O cupom vale junto com o desconto no PIX?</summary><p>Texto de exemplo: depende das regras de cada campanha.</p></details>
+   <details><summary>Por que meu cupom não foi aplicado?</summary><p>Texto de exemplo: verifique validade, produtos elegíveis e valor mínimo.</p></details>
+  </div>
+ </section>
+</main>
+<div id="site-footer"></div>
+<div id="site-chat"></div>
+<script>
+// [desconto, código, para quê, categoria do catálogo, foto (opcional; senão a primeira da categoria)]
+const C=[["10% OFF","CADEIRA10","cadeira gamer","Cadeira","assets/img/produtos/cupom-ff10.webp"],["10% OFF","OFFICE10","cadeira de escritório","Cadeira","assets/img/produtos/cadeira-office-zinnia-dax-braco-2d-espuma-moldada-preta.webp"],["15% OFF","TECLADO15","teclado mecânico","Teclado"],["20% OFF","FONE20","fones de ouvido","Áudio"],["5% OFF","PLACA5","placa de vídeo","Placa de vídeo"],["40% OFF","MONITOR40","monitor","Monitor"],["12% OFF","MOUSE12","mouse gamer","Mouse"]];
+const cp='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>';
+cgrid.innerHTML=C.map(([p,c,t,f,img])=>{const src=img||LX.catPhoto(f);return `<div class="cup"><div class="im">${src?`<img class="ph-img" src="${src}" alt="" width="140" height="140" loading="lazy">`:`<div class="ph" title="Foto do produto elegível ao cupom (${t})"><span>IMG</span></div>`}</div>
+<div class="bd"><div class="pc">${p}</div><div class="ds">em produtos selecionados</div><button class="code" data-c="${c}" aria-label="Copiar cupom ${c}">${c} ${cp}</button><a class="vp" href="promocao.html?cat=${encodeURIComponent(f)}" aria-label="Ver produtos: ${t}">Ver produtos</a></div></div>`}).join('');
+// Só diz "copiado" se a cópia funcionou; senão mostra o código para copiar à mão.
+cgrid.addEventListener('click',e=>{const b=e.target.closest('.code');if(!b)return;const c=b.dataset.c;
+ (navigator.clipboard?navigator.clipboard.writeText(c):Promise.reject())
+  .then(()=>{b.classList.add('ok');LX.toast('Cupom '+c+' copiado');setTimeout(()=>b.classList.remove('ok'),1500)},
+        ()=>LX.toast('Não foi possível copiar. Use o código '+c))});
+</script>
+</body>
+</html>

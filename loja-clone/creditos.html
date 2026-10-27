@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Origem das imagens (redesign de estudo)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="De onde vem cada imagem usada neste redesign de estudo.">
+<meta name="theme-color" content="#303030">
+<meta name="color-scheme" content="dark light">
+<script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&display=optional" rel="stylesheet"><!-- página de texto longo: sem troca de fonte depois de desenhada (evita o texto "pular") -->
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+.cred{padding-bottom:48px}
+.cred p{font-size:14.5px;line-height:1.6;color:var(--txt2);max-width:760px;margin-bottom:14px}
+.cred a{text-decoration:underline;text-underline-offset:3px}
+.cgrid2:empty{min-height:1900px}   /* reserva o espaço até a lista carregar (o rodapé não pula) */
+.cgrid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-top:24px}
+.ci{background:var(--bg2);border-radius:6px;overflow:hidden;font-size:13px}
+.ci img{display:block;width:100%;aspect-ratio:1;object-fit:contain;background:#fff}
+.ci.wide img{aspect-ratio:4/1}
+.ci div{padding:10px 12px;line-height:1.5;overflow-wrap:anywhere}
+.ci b{display:block;font-size:14px}
+.ci span{color:var(--mut)}
+.sec2{font-size:20px;font-weight:800;margin:26px 0 0}.sec2 small{font-size:14px;color:var(--mut);font-weight:400}
+.free{margin-top:34px}.free summary{cursor:pointer;font-weight:700;min-height:44px;display:flex;align-items:center}
+.free .cgrid2{margin-top:12px}
+</style>
+</head>
+<body data-page="creditos">
+<div id="site-header"></div>
+<script src="assets/catalogo.js"></script>
+<script src="assets/common.js"></script>
+<main class="in cred">
+ <nav class="crumb" aria-label="Você está em"><a href="index.html">Home</a> &nbsp;/&nbsp; <b aria-current="page">Origem das imagens</b></nav>
+ <h1 class="ptitle">Origem das imagens</h1>
+ <p><b>Redesign para estudo, uso local.</b> O logo, os banners, os ícones, o mascote e as fotos de produtos foram baixados do site da Pichau e pertencem à Pichau e aos fabricantes. Não publique esta cópia como se fosse o site oficial. Fotos de produto que mostram pessoas reais ficaram de fora (LGPD). Preços, estoques, cupons e dados da empresa são fictícios.</p>
+ <p>As imagens dos PCs montados e das peças do configurador são renders dos modelos 3D próprios desta réplica.</p>
+ <h2 class="sec2">Imagens da Pichau <small id="n"></small></h2>
+ <div class="cgrid2" id="cred" aria-live="polite"></div>
+ <details class="free"><summary>Fotos com licença livre (reserva, usadas só se o catálogo não carregar)</summary>
+  <p>Fotos do <a href="https://commons.wikimedia.org/">Wikimedia Commons</a> com licenças que permitem uso e adaptação; sem pessoas e sem marca visível, sem metadados (EXIF/GPS). As versões adaptadas de fotos CC BY-SA seguem a mesma licença da original.</p>
+  <div class="cgrid2" id="free"></div>
+ </details>
+</main>
+<div id="site-footer"></div>
+<script>
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const wide=f=>/banners\//.test(f);
+const PASTA={produtos:'Produto',banners:'Banner',categorias:'Departamento',icones:'Ícone',logo:'Logo',mascote:'Mascote',pagamento:'Pagamento',selos:'Selo',apps:'Loja de apps'};
+fetch('assets/img/manifest.json').then(r=>r.json()).then(list=>{
+ list=list.filter(c=>!(window.LX_OCULTAS||[]).includes(c.arquivo));
+ document.getElementById('n').textContent=`(${list.length})`;
+ document.getElementById('cred').innerHTML=list.map(c=>{const f=c.arquivo.replace(/^assets\/img\//,'');
+  return `<div class="ci${wide(f)?' wide':''}"><img src="${esc(c.arquivo)}" alt="" loading="lazy" width="300" height="${wide(f)?75:300}">
+  <div><b>${esc(PASTA[f.split('/')[0]]||'Imagem')}</b>${esc(c.alt.trim())}<br><a href="${esc(c.original)}" rel="noopener noreferrer" target="_blank">Arquivo original</a></div></div>`}).join('');
+}).catch(()=>{document.getElementById('cred').textContent='Não foi possível carregar a lista de imagens.'});
+fetch('assets/img/creditos.json').then(r=>r.json()).then(list=>{
+ document.getElementById('free').innerHTML=list.filter(c=>c.edits.length).map(c=>`<div class="ci${c.file.includes('banner')?' wide':''}"><img src="assets/img/${esc(c.file)}" alt="" loading="lazy" width="300" height="${c.file.includes('banner')?75:300}">
+  <div><b>${esc(c.use)}</b>${esc(c.title)}<br><span>Autor:</span> ${esc(c.author||'não informado')}<br>
+  <span>Licença:</span> ${c.licenseUrl?`<a href="${esc(c.licenseUrl)}" rel="license noopener" target="_blank">${esc(c.license)}</a>`:esc(c.license)}<br>
+  <a href="${esc(c.page)}" target="_blank" rel="noopener">Ver original</a> · alterações: ${esc(c.edits.join(', '))}</div></div>`).join('');
+}).catch(()=>{});
+</script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Promoção (réplica de layout)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Ofertas da campanha de Halloween em hardware, periféricos e PCs. Réplica de layout para estudo.">
+<meta name="theme-color" content="#303030">
+<meta name="color-scheme" content="dark light">
+<script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* Topo compacto: a contagem fica à vista e as ofertas começam logo abaixo (antes o banner de 350 px empurrava tudo). */
+.promo-ban{display:block;width:100%;height:auto;border-radius:8px 8px 0 0}
+.promo-ban+.promo-hero{border-radius:0 0 8px 8px;min-height:0;padding:14px 26px;background:linear-gradient(90deg,var(--ev-a),var(--ev-b))}
+.promo-hero{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;min-height:150px;padding:20px 26px;border-radius:8px;overflow:hidden;color:#fff;background:#151517;margin-bottom:18px}
+.promo-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.promo-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.35) 70%)}
+.promo-hero>*:not(img){position:relative;z-index:1}
+.promo-hero h1{font-size:30px;font-weight:900;text-transform:uppercase;letter-spacing:.5px;line-height:1.05}
+.promo-hero p{font-size:15px;margin-top:6px;opacity:.92}
+.cd p{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+.cd .u{display:flex;gap:8px}
+.cd .u div{min-width:58px;text-align:center;padding:8px 6px;border-radius:6px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18)}
+.cd strong{display:block;font-size:26px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.cd span{font-size:11px;text-transform:uppercase;letter-spacing:.4px;opacity:.85}
+@media(max-width:560px){.promo-hero{padding:12px 14px;min-height:0;gap:8px}.promo-hero h1{font-size:20px}.promo-hero p{display:none}
+  .cd{display:flex;align-items:center;gap:8px}.cd p{margin:0;font-size:11px}.cd .u{gap:4px}.cd .u div{min-width:40px;padding:4px 3px}.cd strong{font-size:16px}.cd span{font-size:9px}
+  .crumb{padding:10px 0 8px}}
+</style>
+</head>
+<body data-page="promo" data-seed="21">
+<div id="site-header"></div>
+<script src="assets/catalogo.js"></script>
+<script src="assets/common.js"></script>
+<main class="in">
+ <nav class="crumb" aria-label="Você está em"><a href="index.html">Home</a> &nbsp;/&nbsp; <b aria-current="page">Black Halloween</b></nav>
+ <img class="promo-ban" src="assets/img/banners/index/hero-principal-hallopruumo.webp" alt="Promoção Black Halloween: até 60% OFF" width="1980" height="320" fetchpriority="high">
+ <div class="promo-hero">
+  <div><h1>Black Halloween</h1><p>Hardware, periféricos e PCs com até 60% OFF no PIX</p></div>
+  <div class="cd" id="cd" data-end="2026-10-31T23:59:59-03:00" role="timer" aria-label="Tempo restante da promoção"><p>Termina em</p><div class="u">
+   <div><strong id="d">00</strong><span>Dias</span></div><div><strong id="h">00</strong><span>Horas</span></div><div><strong id="m">00</strong><span>Min</span></div><div><strong id="s">00</strong><span>Seg</span></div></div></div>
+ </div>
+ <div class="listing" id="listing" data-total="1405" data-pc="0" data-sort="desconto" data-chips="1" data-featured="1"></div>
+</main>
+<div id="site-footer"></div>
+<div id="site-chat" data-q="Procurando alguma oferta?"></div>
+<script src="assets/listing.js"></script>
+<script>
+// Data de término fixa da campanha (data-end): recarregar a página não reinicia a contagem.
+const cd=document.getElementById('cd'),end=Date.parse(cd.dataset.end),p=n=>String(n).padStart(2,'0');
+(function tick(){const t=Math.max(0,(end-Date.now())/1000|0);
+ if(!t){cd.querySelector('p').textContent='Promoção encerrada';return}
+ d.textContent=p(t/86400|0);h.textContent=p(t%86400/3600|0);m.textContent=p(t%3600/60|0);s.textContent=p(t%60);setTimeout(tick,1000)})();
+</script>
+</body>
+</html>

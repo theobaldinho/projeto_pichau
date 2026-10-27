@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Home (réplica de layout)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Hardware, periféricos e PCs gamer com desconto no PIX. Réplica de layout para estudo.">
+<meta name="theme-color" content="#303030">
+<meta name="color-scheme" content="dark light">
+<script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* Home no formato das páginas de promoção das lojas de jogos: destaque grande, ofertas relâmpago, atalhos por preço e categoria. */
+.sec{padding:26px 0 8px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-h h2{font-size:20px;font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+.sec-h a{font-size:14px;font-weight:700;color:var(--txt2);text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.sec-h .sub{font-size:13px;color:var(--mut);font-weight:400;text-transform:none;letter-spacing:0;margin-left:8px}
+
+/* Destaque (carrossel grande) */
+.hero{position:relative;background:linear-gradient(180deg,var(--ev-a) 0%,var(--bg) 100%);padding:18px 0 6px}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;color:#fff}
+.hero-top h1{font-size:26px;font-weight:900;text-transform:uppercase;letter-spacing:.5px}
+.hero-top h1 small{display:block;font-size:13px;font-weight:500;text-transform:none;letter-spacing:0;opacity:.9}
+.hero-top .cd{display:flex;align-items:center;gap:8px;font-size:13px}
+.hero-top time{font-size:18px;font-weight:800;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.4);padding:4px 10px;border-radius:4px}
+.spot{position:relative;display:grid;grid-template-columns:1.5fr 1fr;min-height:340px;background:var(--bg2);border-radius:8px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.35)}
+.spot-img{position:relative;background:radial-gradient(120% 120% at 30% 40%,#3a3b40 0%,#141416 80%)}
+.spot-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:18px}
+.spot-img img.photo{object-fit:contain;padding:14px;background:#fff}
+.spot-info{display:flex;flex-direction:column;gap:10px;padding:22px 22px 20px}
+.spot-info .kicker{font-size:12px;font-weight:800;text-transform:uppercase;color:var(--kicker);letter-spacing:.6px}
+.spot-info h3{font-size:22px;font-weight:700;line-height:1.25}
+.spot-info .specs{padding:0}
+.spot-info .pricebox{margin:6px 0 0;min-height:56px}
+.spot-info .pricebox .pct{font-size:30px;padding:0 14px}
+.spot-info .pprice{font-size:28px}
+.spot-info .ppix,.spot-info .pinst{padding:0}
+.spot-acts{display:flex;gap:8px;margin-top:auto;flex-wrap:wrap}
+.spot-acts .add{position:static;margin:0;flex:1;min-width:160px;height:48px;font-size:16px}
+.spot-acts a{display:flex;align-items:center;justify-content:center;height:48px;padding:0 16px;border:1px solid var(--edge);border-radius:4px;font-weight:700}
+.spot-nav{display:flex;align-items:center;gap:8px;margin-top:12px}
+.spot-thumbs{display:flex;gap:8px;flex:1;overflow-x:auto;scrollbar-width:none}
+.spot-thumbs button{flex:0 0 92px;height:56px;border-radius:5px;border:2px solid transparent;background:var(--bg2) center/contain no-repeat;cursor:pointer;opacity:.6;transition:opacity .2s}
+.spot-thumbs button[aria-current=true]{border-color:var(--red);opacity:1}
+.spot-thumbs button:hover{opacity:1}
+.spot-arrow{width:44px;height:44px;border-radius:50%;border:0;background:var(--bg2);font-size:22px;cursor:pointer;flex:none}
+.spot-arrow:hover{background:var(--hover)}
+.spot-play{min-width:44px;height:44px;border-radius:22px;border:1px solid var(--edge);background:none;font-size:13px;font-weight:700;cursor:pointer;padding:0 12px}
+
+/* Banners da campanha e das marcas (imagens com o texto embutido: o alt repete o texto). */
+.hero-ban{display:block;border-radius:8px;overflow:hidden;margin-bottom:14px;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.hero-ban img,.bnr img{display:block;width:100%;height:auto}
+.bnr{display:block;border-radius:6px;overflow:hidden;transition:transform .15s}
+@media(hover:hover){.bnr:hover{transform:translateY(-2px)}}
+.bn2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.brands{display:grid;grid-auto-flow:column;grid-auto-columns:calc(50% - 8px);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:thin;padding-bottom:6px}
+.brands>a{scroll-snap-align:start}
+/* Departamentos com ícone */
+.deps-row{display:grid;grid-auto-flow:column;grid-auto-columns:112px;gap:10px;overflow-x:auto;scrollbar-width:thin;padding-bottom:6px;margin:0;list-style:none}
+.deps-row a{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:8px;background:var(--bg2);border:1px solid var(--line);text-align:center;font-size:12px;font-weight:700;line-height:1.2;height:100%}
+.deps-row img{width:72px;height:72px;object-fit:contain}
+@media(hover:hover){.deps-row a:hover{border-color:var(--edge)}}
+/* Espaço reservado enquanto o script monta cada seção (a página não "pula" no carregamento). */
+.row4:empty{min-height:560px}.deps-row:empty{min-height:128px}.cats8:empty{min-height:314px}.chips:empty{min-height:78px}.spot:empty{min-height:340px}.spot-thumbs:empty{min-height:56px}
+@media(max-width:900px){.cats8:empty{min-height:314px}.spot:empty{min-height:520px}}
+/* Linhas de cards com rolagem horizontal (celular) ou grade (computador) */
+.row4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.row4 .pcard{background:var(--bg2)}
+.flashmeta{padding:8px 9px 0;font-size:12px;color:var(--txt2)}
+.flashmeta time{font-weight:800;color:var(--flash);font-variant-numeric:tabular-nums}
+.stockbar{height:6px;border-radius:3px;background:var(--chip);overflow:hidden;margin:6px 0 3px}
+.stockbar i{display:block;height:100%;background:linear-gradient(90deg,#ff9800,var(--red))}
+
+/* Atalhos por preço e desconto */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip-lg{display:flex;flex-direction:column;justify-content:center;min-width:150px;flex:1;height:78px;padding:0 16px;border-radius:8px;background:linear-gradient(135deg,var(--bg2),var(--box));border:1px solid var(--line);transition:transform .15s,border-color .15s}
+.chip-lg small{font-size:12px;color:var(--mut)}.chip-lg b{font-size:20px;font-weight:800}
+.chip-lg.deal b{color:var(--price)}
+@media(hover:hover){.chip-lg:hover{transform:translateY(-2px);border-color:var(--edge)}}
+
+/* Categorias em oferta */
+.cats8{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.cat-t{position:relative;height:150px;border-radius:8px;overflow:hidden;background:#151517;color:#fff;display:flex;align-items:flex-end}
+.cat-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .35s}
+.cat-t::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.85) 100%)}
+.cat-t span{position:relative;z-index:1;padding:12px 14px;display:flex;flex-direction:column}
+.cat-t b{font-size:17px;font-weight:800}.cat-t em{font-style:normal;font-size:13px;color:#d7f59a;font-weight:700}
+@media(hover:hover){.cat-t:hover img{transform:scale(1.06)}}
+
+/* Abas "Em alta" */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--edge);background:none;font-weight:700;cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--red);border-color:var(--red);color:var(--on)}
+
+/* Faixas: Monte seu PC e cupons */
+.band{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.band>a,.band>div{border-radius:8px;padding:20px;min-height:170px;position:relative;overflow:hidden}
+.b-monte{background:radial-gradient(90% 120% at 85% 60%,#4a1418 0%,#1d1d20 70%);color:#fff;display:flex;flex-direction:column;justify-content:center}
+.b-monte img{position:absolute;right:8px;bottom:0;height:100%;width:auto;object-fit:contain;padding:8px 0}
+.b-monte b{font-size:24px;font-weight:900;text-transform:uppercase;position:relative;max-width:60%}
+.b-monte p{position:relative;max-width:58%;font-size:14px;margin:6px 0 12px;opacity:.9}
+.b-monte em{position:relative;align-self:flex-start;font-style:normal;font-weight:700;background:var(--red);padding:8px 14px;border-radius:4px}
+.b-cup{background:var(--bg2);border:1px dashed var(--edge)}
+.b-cup h3{font-size:18px;font-weight:800;margin-bottom:10px}
+.cup-row{display:flex;flex-direction:column;gap:8px}
+.cup-row button{display:flex;justify-content:space-between;align-items:center;height:42px;padding:0 12px;border:1px dashed var(--code,#ffb8b8);border-radius:6px;background:none;color:var(--txt);cursor:pointer;font-weight:700}
+.cup-row button span{color:var(--price)}
+
+.s-rel{background:var(--bg2);padding:10px 0 30px;margin-top:30px;border-top:1px solid var(--line)}
+.s-rel h2{font-size:14px;font-weight:700;margin:14px 0}
+.rels{display:flex;flex-wrap:wrap;gap:8px}
+.rel{font-size:12px;background:var(--chip);border-radius:14px;padding:6px 12px;color:var(--chip-t)}
+:root{--code:#ffb8b8;--kicker:#ffb3b8;--flash:#ffb066}:root[data-theme=light]{--code:#b3141b;--kicker:#b3141b;--flash:#a64b00}
+
+@media(max-width:900px){.spot{grid-template-columns:1fr}.spot-img{height:220px}.bn2{grid-template-columns:1fr}.brands{grid-auto-columns:88%}.row4,.cats8{grid-template-columns:repeat(2,1fr)}.band{grid-template-columns:1fr}}
+@media(max-width:560px){
+  .hero-top{flex-direction:column;align-items:flex-start}.hero-top h1{font-size:21px}
+  .spot-info{padding:16px}.spot-info h3{font-size:18px}
+  /* No celular as linhas de ofertas viram uma faixa que desliza (cabe mais oferta na tela). */
+  .row4{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 calc(var(--gut)*-1);padding:0 var(--gut) 8px;scrollbar-width:none}
+  .row4>*{flex:0 0 78%;scroll-snap-align:start}
+  .cats8{grid-template-columns:repeat(2,1fr);gap:10px}.cat-t{height:120px}
+  .chip-lg{min-width:calc(50% - 5px);height:68px}
+  .b-monte b,.b-monte p{max-width:62%}
+}
+@media(prefers-reduced-motion:no-preference){.row4{scroll-behavior:smooth}}
+</style>
+</head>
+<body data-page="home" data-seed="7">
+<div id="site-header"></div>
+<script src="assets/pcs-data.js"></script>
+<script src="assets/catalogo.js"></script>
+<script src="assets/common.js"></script>
+<main>
+ <section class="hero" aria-labelledby="h-hero"><div class="in">
+  <div class="hero-top">
+   <h1 id="h-hero">Black Halloween<small>Hardware, periféricos e PCs com até 60% OFF no PIX</small></h1>
+   <div class="cd">Termina em <time data-cd></time></div>
+  </div>
+  <a class="hero-ban" href="promocao.html"><img src="assets/img/banners/index/hero-principal-hallopruumo.webp" alt="Promoção Black Halloween: até 60% OFF" width="1980" height="320" fetchpriority="high"></a>
+  <div class="spot" id="spot" role="region" aria-roledescription="carrossel" aria-label="Destaques da promoção"></div>
+  <div class="spot-nav">
+   <button class="spot-arrow" data-d="-1" aria-label="Destaque anterior">‹</button>
+   <div class="spot-thumbs" id="thumbs" role="group" aria-label="Escolher destaque"></div>
+   <button class="spot-arrow" data-d="1" aria-label="Próximo destaque">›</button>
+   <button class="spot-play" id="play" aria-pressed="false">Pausar</button>
+  </div>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-flash"><div class="in">
+  <div class="sec-h"><h2 id="h-flash">Ofertas relâmpago<span class="sub">por tempo e estoque limitados</span></h2><a href="promocao.html?sort=desconto">Ver todas</a></div>
+  <div class="row4" id="flash"></div>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-brands"><div class="in">
+  <div class="sec-h"><h2 id="h-brands">Marcas em destaque</h2></div>
+  <div class="brands">
+   <a class="bnr" href="promocao.html?q=sandisk"><img src="assets/img/banners/index/slider/slider-01-sandisk-optimus.webp" alt="SanDisk Optimus: o novo legado do armazenamento SSD de alto desempenho" width="900" height="100" loading="lazy"></a>
+   <a class="bnr" href="promocao.html?q=geforce"><img src="assets/img/banners/index/slider/slider-02-nvidia-upgrade-geforce-rtx.webp" alt="O mesmo PC, outro nível de jogo: faça o upgrade para uma GeForce RTX" width="900" height="100" loading="lazy"></a>
+   <a class="bnr" href="promocao.html?q=amd"><img src="assets/img/banners/index/slider/slider-03-amd-bundle-onimusha-v2.webp" alt="AMD: receba Onimusha Way of the Sword na compra de produtos participantes" width="900" height="100" loading="lazy"></a>
+   <a class="bnr" href="promocao.html?q=rtx"><img src="assets/img/banners/index/slider/slider-05-nvidia-holidays.webp" alt="Prontos para o futuro: jogue e crie com GeForce RTX série 50" width="900" height="100" loading="lazy"></a>
+   <a class="bnr" href="promocao.html?q=radeon"><img src="assets/img/banners/index/slider/slider-06-amd-level-up-set-26.webp" alt="ASUS e AMD Level Up: upgrade que importa com Radeon RX 9000" width="900" height="100" loading="lazy"></a>
+   <a class="bnr" href="promocao.html?cat=Teclado&amp;cat=Mouse"><img src="assets/img/banners/index/slider/slider-04-logitech.webp" alt="Logitech: confira periféricos" width="900" height="100" loading="lazy"></a>
+  </div>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-price"><div class="in">
+  <div class="sec-h"><h2 id="h-price">Ofertas por preço</h2></div>
+  <div class="chips" id="prices"></div>
+ </div></section>
+
+ <section class="sec" aria-label="Processadores AMD e placas NVIDIA"><div class="in bn2">
+  <a class="bnr" href="promocao.html?q=ryzen"><img src="assets/img/banners/index/banner-duplo-01-amd-cpu.webp" alt="Processadores AMD Ryzen: seleção especial" width="736" height="100" loading="lazy"></a>
+  <a class="bnr" href="promocao.html?q=geforce"><img src="assets/img/banners/index/banner-duplo-02-nvidia-v1.jpg" alt="Upgrade NVIDIA GeForce RTX: confira" width="736" height="100" loading="lazy"></a>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-deps"><div class="in">
+  <div class="sec-h"><h2 id="h-deps">Departamentos</h2></div>
+  <ul class="deps-row" id="deps"></ul>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-cat"><div class="in">
+  <div class="sec-h"><h2 id="h-cat">Categorias em oferta</h2><a href="promocao.html">Ver promoção completa</a></div>
+  <div class="cats8" id="cats"></div>
+ </div></section>
+
+ <section class="sec" aria-labelledby="h-top"><div class="in">
+  <a class="bnr" href="promocao.html?cat=Computador" style="margin-bottom:18px"><img src="assets/img/banners/index/banner-secundario-pc-gamer-halloween.webp" alt="Promo PC Gamer Halloween: confira" width="1488" height="100" loading="lazy"></a>
+  <div class="sec-h"><h2 id="h-top">Em alta na promoção</h2></div>
+  <div class="tabs" role="tablist" aria-label="Listas de ofertas" id="tabs"></div>
+  <div class="row4" id="tabpanel" role="tabpanel" tabindex="0"></div>
+ </div></section>
+
+ <section class="sec" aria-label="Monte seu PC e cupons"><div class="in band">
+  <a class="b-monte" href="monte-seu-pc.html"><img src="assets/img/pcs/pc-5.webp" alt="" width="256" height="256" loading="lazy"><b>Monte seu PC</b><p>Compatibilidade, encaixe no gabinete e consumo checados peça por peça, com prévia em 3D.</p><em>Começar a montar</em></a>
+  <div class="b-cup"><h3>Cupons ativos</h3><div class="cup-row" id="cups"></div><a href="cupons.html" style="display:inline-block;margin-top:10px;font-weight:700;text-decoration:underline">Ver todos os cupons</a></div>
+ </div></section>
+
+ <section class="sec" aria-label="Energético e Empresas"><div class="in" style="display:grid;gap:16px">
+  <a class="bnr" href="promocao.html?cat=Energ%C3%A9tico"><img src="assets/img/banners/empresas/pichau-energy-drink.webp" alt="Conheça o Pichau Energy Drink" width="1232" height="100" loading="lazy"></a>
+  <a class="bnr" href="empresas.html"><img src="assets/img/banners/empresas/pichau-empresas.webp" alt="Pichau Empresas: portal exclusivo para compras com CNPJ. Acesse já" width="1450" height="140" loading="lazy"></a>
+ </div></section>
+
+ <div class="s-rel"><div class="in"><h2>LINKS RELACIONADOS</h2><div class="rels" id="rels"></div></div></div>
+</main>
+<div id="site-footer"></div>
+<div id="site-chat" data-q="Olá! Procurando algo?"></div>
+<script>
+const {product,card,brl,photo}=LX;
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+// Catálogo de exemplo da home (mesmo gerador da listagem) + PCs prontos validados pelo configurador.
+const pool=Array.from({length:LX.CATALOG.length||240},()=>product());
+const pcs=(window.LX_PCS||[]).map(()=>product({pc:true}));
+
+/* ---------- Destaque: as maiores ofertas, uma por categoria, e um PC pronto ---------- */
+const seen=new Set(),used=new Set();
+const isPhoto=p=>!!p.img;
+const featured=[...pool].sort((a,b)=>b.off-a.off).filter(p=>isPhoto(p)&&!seen.has(p.cat)&&seen.add(p.cat)).slice(0,5);
+featured.forEach(p=>used.add(p));
+featured.splice(2,0,pcs.find(p=>p.off)||pcs[0]);
+const spot=document.getElementById('spot'),thumbs=document.getElementById('thumbs');
+let cur=0,timer=0,paused=reduce;
+const slide=(p,i)=>`<div class="spot-slide" role="group" aria-roledescription="slide" aria-label="${i+1} de ${featured.length}" style="display:contents">
+ <div class="spot-img"><img class="${p.pc?'':'photo'}" src="${p.img}" alt="" width="600" height="400" ${i?'loading="lazy"':'fetchpriority="high"'}></div>
+ <div class="spot-info"><span class="kicker">${p.pc?'PC pronto em oferta':'Destaque · '+p.cat}</span><h3><a class="plink2" href="${p.href||'promocao.html?cat='+encodeURIComponent(p.cat)}">${p.n.split(', EXP')[0]}</a></h3>
+  ${p.specs?`<div class="specs">${p.specs.map(s=>`<span>${s}</span>`).join('')}</div>`:''}
+  <div class="pricebox">${p.off?`<span class="pct">-${p.off}%</span>`:''}<span class="prices">${p.old?`<s>${brl(p.old)}</s>`:''}<b class="pprice">${brl(p.pix)}</b></span></div>
+  <div class="ppix">no PIX${p.old?` · <strong>economize ${brl(p.old-p.pix)}</strong>`:''}</div>
+  <div class="pinst">ou ${brl(p.full)} em até ${p.ni}x sem juros</div>
+  <div class="spot-acts"><button class="add" data-add="${encodeURIComponent(p.n)}">${LX.I.cart}<span>Adicionar</span></button><a href="${p.pc?p.href:'promocao.html?cat='+encodeURIComponent(p.cat)}">${p.pc?'Personalizar':'Ver categoria'}</a></div></div></div>`;
+function show(i,focus){
+  cur=(i+featured.length)%featured.length;
+  spot.innerHTML=slide(featured[cur],cur);
+  thumbs.querySelectorAll('button').forEach((b,k)=>b.setAttribute('aria-current',k===cur));
+  if(focus)spot.querySelector('.plink2').focus();
+}
+thumbs.innerHTML=featured.map((p,i)=>`<button style="background-image:url('${p.img}')" aria-label="Destaque ${i+1}: ${p.n.split(',')[0]}"></button>`).join('');
+thumbs.onclick=e=>{const b=e.target.closest('button');if(b)show([...thumbs.children].indexOf(b))};
+document.querySelectorAll('.spot-arrow').forEach(b=>b.onclick=()=>show(cur+ +b.dataset.d));
+// Troca sozinho a cada 6 s; para ao passar o mouse, ao focar e com "reduzir movimento"; botão Pausar/Continuar.
+const play=document.getElementById('play');
+const auto=()=>{clearInterval(timer);if(!paused)timer=setInterval(()=>show(cur+1),6000);play.textContent=paused?'Continuar':'Pausar';play.setAttribute('aria-pressed',paused)};
+play.onclick=()=>{paused=!paused;auto()};
+const hero=document.querySelector('.hero');
+hero.addEventListener('mouseenter',()=>clearInterval(timer));hero.addEventListener('mouseleave',auto);
+hero.addEventListener('focusin',()=>clearInterval(timer));hero.addEventListener('focusout',auto);
+show(0);auto();
+
+/* ---------- Ofertas relâmpago: término a cada 3 h e estoque restante ---------- */
+const now=new Date(),base=new Date(now);base.setMinutes(0,0,0);base.setHours(Math.floor(now.getHours()/3)*3+3);
+const flashBase=[...pool].filter(p=>p.off>=33&&p.img&&!used.has(p)).slice(0,4);flashBase.forEach(p=>used.add(p));
+const flash=flashBase.map((p,i)=>({...p,flash:true,end:new Date(base.getTime()+i*3*3600e3),left:[7,12,19,31][i]}));
+document.getElementById('flash').innerHTML=flash.map(p=>card(p).replace('<button class="add"',`<div class="flashmeta">Termina em <time data-cd data-cd-roll="${12*3600e3}" data-cd-end="${p.end.toISOString()}"></time>
+  <div class="stockbar" aria-hidden="true"><i style="width:${100-p.left*2}%"></i></div>Restam ${p.left} unidades</div><button class="add"`)).join('');
+
+/* ---------- Atalhos por preço e desconto (abrem a promoção já filtrada) ---------- */
+const tiers=[[100,'Até'],[300,'Até'],[1000,'Até'],[3000,'Até']];
+document.getElementById('prices').innerHTML=tiers.map(([v,l])=>`<a class="chip-lg" href="promocao.html?max=${v}&sort=desconto"><small>${l}</small><b>${brl(v).replace(',00','')}</b></a>`).join('')
+ +`<a class="chip-lg deal" href="promocao.html?off=40&sort=desconto"><small>Descontos de</small><b>40% OFF ou mais</b></a>`;
+
+/* ---------- Categorias em oferta: foto + maior desconto da categoria ---------- */
+const byCat={};for(const p of pool){if(!p.img)continue;const c=byCat[p.cat]||(byCat[p.cat]={img:p.img,max:0,n:0});c.max=Math.max(c.max,p.off);c.n++}
+const cats=Object.entries(byCat).sort((a,b)=>b[1].max-a[1].max||b[1].n-a[1].n).slice(0,8);
+document.getElementById('cats').innerHTML=cats.map(([c,v])=>`<a class="cat-t" href="promocao.html?cat=${encodeURIComponent(c)}&sort=desconto"><img src="${v.img}" alt="" width="300" height="300" loading="lazy"><span><b>${c}</b><em>até ${v.max}% OFF</em></span></a>`).join('');
+
+/* ---------- Departamentos ---------- */
+document.getElementById('deps').innerHTML=LX.DEPS.map((d,i)=>`<li><a href="${LX.depHref(d)}"><img src="${LX.DEP_IMG[i]}" alt="" width="72" height="72" loading="lazy">${d}</a></li>`).join('');
+
+/* ---------- Abas "Em alta" ---------- */
+// Sem repetir o que já está no destaque e nas ofertas relâmpago.
+const rest=pool.filter(p=>!used.has(p));
+const TABS=[['Maiores descontos',()=>[...rest].sort((a,b)=>b.off-a.off)],['Mais vendidos',()=>[...rest].sort((a,b)=>b.sold-a.sold)],
+  ['Até R$ 200',()=>rest.filter(p=>p.pix<=200).sort((a,b)=>b.off-a.off)],['PCs prontos',()=>pcs]];
+const tabs=document.getElementById('tabs'),panel=document.getElementById('tabpanel');
+tabs.innerHTML=TABS.map(([l],i)=>`<button role="tab" id="tab${i}" aria-controls="tabpanel" aria-selected="${!i}" tabindex="${i?-1:0}">${l}</button>`).join('');
+const pickTab=(i,focus)=>{tabs.querySelectorAll('[role=tab]').forEach((t,k)=>{t.setAttribute('aria-selected',k===i);t.tabIndex=k===i?0:-1});
+ panel.setAttribute('aria-labelledby','tab'+i);panel.innerHTML=TABS[i][1]().slice(0,8).map(p=>card(p)).join('');if(focus)tabs.children[i].focus()};
+tabs.onclick=e=>{const t=e.target.closest('[role=tab]');if(t)pickTab([...tabs.children].indexOf(t))};
+tabs.onkeydown=e=>{const i=[...tabs.children].indexOf(document.activeElement),n=TABS.length;
+ if(e.key==='ArrowRight')pickTab((i+1)%n,true);else if(e.key==='ArrowLeft')pickTab((i-1+n)%n,true);else if(e.key==='Home')pickTab(0,true);else if(e.key==='End')pickTab(n-1,true)};
+pickTab(0);
+
+/* ---------- Cupons ---------- */
+const CUPS=[['MONITOR40','40% OFF em monitores'],['FONE20','20% OFF em fones de ouvido'],['CADEIRA10','10% OFF em cadeiras']];
+const cups=document.getElementById('cups');
+cups.innerHTML=CUPS.map(([c,t])=>`<button data-c="${c}" aria-label="Copiar cupom ${c}: ${t}">${c}<span>${t}</span></button>`).join('');
+cups.onclick=e=>{const b=e.target.closest('button');if(!b)return;
+ (navigator.clipboard?navigator.clipboard.writeText(b.dataset.c):Promise.reject()).then(()=>LX.toast('Cupom '+b.dataset.c+' copiado'),()=>LX.toast('Use o código '+b.dataset.c))};
+
+document.getElementById('rels').innerHTML=["montar pc","computador gamer","OPENBOX","empresas","hardware","placas de video","ssd","cadeira gamer","energetico","video games","monitor 27 polegadas"].map(r=>`<a href="promocao.html?q=${encodeURIComponent(r)}" class="rel">${r}</a>`).join('');
+LX.tick();
+</script>
+</body>
+</html>

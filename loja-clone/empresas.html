@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja Exemplo — Empresas (réplica de layout)</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Loja para empresas: preços para CNPJ em hardware, periféricos e acessórios. Réplica de layout para estudo.">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light dark">
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('lx-theme')||'light'}catch(e){document.documentElement.dataset.theme='light'}</script>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/img/logo/favicon.ico">
+<script src="assets/catalogo.js"></script><!-- no <head>: os cards são montados antes do primeiro desenho -->
+<style>
+:root{--red:#e90313;--txt:#333;--mut:#666;--line:#e6e6e6;--bg:#fbfbfb;--surface:#fff;--field-b:#ccc;--hover:#f5f5f5;--strong:#222;--h2:#555;--login:#c40210;
+  --ph-1:#e9e9e9;--ph-2:#f1f1f1;--ph-o:#c4c4c4;--ph-t:#555;--ph-bg:rgba(255,255,255,.85);--shadow:rgba(0,0,0,.08);--focus:#333;color-scheme:light}
+/* Tema escuro (mesmo switch e preferência do resto da loja); a Empresas abre clara se não houver escolha. */
+:root[data-theme=dark]{--txt:#e6e6e6;--mut:#b5b5b5;--line:#3a3b40;--bg:#1d1e21;--surface:#2a2b2f;--field-b:#55575c;--hover:#34353a;--strong:#f2f2f2;--h2:#cfcfcf;--login:#ff8a8a;
+  --ph-1:#34353a;--ph-2:#2e2f33;--ph-o:#55575c;--ph-t:#e6e6e6;--ph-bg:rgba(0,0,0,.6);--shadow:rgba(0,0,0,.4);--focus:#fff;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:Roboto,Arial,sans-serif}
+a{color:inherit;text-decoration:none}ul{list-style:none}
+.in{max-width:1000px;margin:0 auto;padding:0 20px}
+.ph{position:relative;background:repeating-linear-gradient(45deg,var(--ph-1) 0 10px,var(--ph-2) 10px 20px);outline:1px dashed var(--ph-o);outline-offset:-1px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.ph>span{font-size:11px;color:var(--ph-t);background:var(--ph-bg);padding:3px 8px;border-radius:3px;pointer-events:none}
+.wf-note{background:#111;color:#9a9a9a;font-size:11px;text-align:center;padding:4px}
+.tb{background:#2b2b2b;color:#aaa;font-size:11px;height:30px}
+.tb .in{display:flex;justify-content:space-between;align-items:center;height:100%}
+.tb a,.tb .theme{display:flex;align-items:center;gap:6px}
+.tb .r{display:flex;gap:18px;align-items:center}
+.theme{background:none;border:0;color:inherit;font:inherit;cursor:pointer;min-height:30px}
+.sw{width:30px;height:12px;border-radius:6px;background:#9e9e9e;position:relative;flex:none}
+.sw::after{content:"";position:absolute;left:0;top:-3px;width:18px;height:18px;border-radius:50%;background:#e0e0e0;box-shadow:0 1px 3px rgba(0,0,0,.4);transition:left .15s}
+.theme[aria-checked=true] .sw{background:#b5020f}.theme[aria-checked=true] .sw::after{left:12px}
+header{background:var(--surface);border-bottom:1px solid var(--line)}
+.hm{display:flex;align-items:center;gap:28px;height:84px}
+.logo{height:52px;flex:none;display:flex;align-items:center;gap:10px}
+.logo img{width:150px;height:auto;display:block}
+.logo b{font-size:14px;font-weight:700;letter-spacing:.12em;color:var(--red);border-left:2px solid var(--line);padding-left:10px}
+/* Logo branco: na página clara vira escuro (o símbolo continua vermelho). */
+:root:not([data-theme=dark]) .logo img{filter:invert(1) hue-rotate(180deg)}
+:root[data-theme=dark] .logo b{color:#ff6b74}
+.sr{flex:1;max-width:580px;display:flex;height:40px;border:1px solid var(--field-b);border-radius:4px;overflow:hidden}
+.sr input{flex:1;border:0;outline:0;padding:0 12px;font:inherit;font-size:16px;color:var(--txt);background:var(--surface)}
+.sr:focus-within{outline:2px solid var(--focus);outline-offset:2px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.sr kbd{align-self:center;border:1px solid var(--field-b);border-radius:4px;font-family:inherit;font-size:11px;padding:2px 6px;margin-right:8px;color:var(--mut)}
+.sr button{width:44px;border:0;background:var(--red);cursor:pointer;display:grid;place-items:center}
+.hi{margin-left:auto;display:flex;gap:22px}
+.cats{background:var(--surface);border-bottom:1px solid var(--line);padding:14px 0}
+.cats ul{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:16px 44px;padding-left:20px}
+.cats li{position:relative;font-size:15px;color:var(--txt);display:flex;align-items:center}
+.cats li>button{background:none;border:0;font:inherit;color:inherit;cursor:pointer;display:flex;align-items:center;gap:6px;min-height:32px;padding:0}
+.cats li .dd{position:absolute;top:100%;left:0;margin-top:10px;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 30px var(--shadow);padding:10px 0;min-width:200px;display:none;z-index:5}
+.cats li:hover .dd,.cats li:focus-within .dd{display:block}
+.dd a{display:block;padding:8px 16px;font-size:14px}.dd a:hover{background:var(--hover)}
+.ban{display:block;margin:30px 0 14px;border-radius:6px;overflow:hidden}
+.ban img{display:block;width:100%;height:auto}
+h2.s{font-size:26px;font-weight:400;color:var(--h2);margin:20px 0 26px}
+.row{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:40px}
+.pc{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 12px 16px;text-align:center;display:flex;flex-direction:column;transition:box-shadow .2s}
+.pc:hover{box-shadow:0 8px 24px var(--shadow)}
+.pi{aspect-ratio:1;margin-bottom:14px;position:relative;background:#fff;border-radius:4px;overflow:hidden}
+.pi img{width:100%;height:100%;object-fit:contain;display:block}
+.pi>.off{position:absolute;top:0;left:0;background:var(--red);color:#fff;font-size:11px;font-weight:700;padding:3px 6px;border-radius:2px}
+.pn{font-size:14px;font-weight:400;line-height:1.45;color:var(--txt);margin-bottom:10px;flex:1}
+.login{font-size:13px;font-weight:500;color:var(--login);margin-top:6px}
+footer{background:var(--surface);border-top:1px solid var(--line);margin-top:40px;padding:40px 0 20px;font-size:14px;color:var(--mut)}
+.fc{display:grid;grid-template-columns:repeat(3,1fr) 1.2fr;gap:30px}
+footer h3{font-size:15px;color:var(--strong);margin-bottom:14px}
+footer li{margin-bottom:9px}footer li a:hover{color:var(--red)}
+.fbot{border-top:1px solid var(--line);margin-top:30px;padding-top:16px;font-size:12px;color:var(--mut);text-align:center}
+.wa{position:fixed;right:22px;bottom:22px;width:56px;height:56px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+@media(max-width:900px){.row{grid-template-columns:repeat(3,1fr)}.fc{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.row{grid-template-columns:1fr 1fr}.hm{flex-wrap:wrap;height:auto;padding:12px 0;gap:12px}.sr{order:3;max-width:none;flex-basis:100%}.sr kbd{display:none}.fc{grid-template-columns:1fr}.cats ul{gap:12px 22px}}
+</style>
+</head>
+<body>
+<div class="wf-note">Redesign para estudo, uso local · dados fictícios · imagens da Pichau e dos fabricantes</div>
+<div class="tb"><div class="in"><a href="#">Sobre a Loja Exemplo Empresas</a><div class="r"><button class="theme" role="switch" aria-checked="false"><span class="sw" aria-hidden="true"></span>Modo escuro</button><a href="#" title="Contato via WhatsApp"><svg width="13" height="13" viewBox="0 0 24 24" fill="#25d366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Z"/></svg>(00) 90000-0000</a></div></div></div>
+<header><div class="in hm">
+ <a href="index.html" class="logo"><img src="assets/img/logo/logo-pichau.webp" alt="Pichau" width="412" height="97"><b>EMPRESAS</b></a>
+ <form class="sr" role="search" onsubmit="return false"><input id="q" type="search" aria-label="Buscar produtos" aria-keyshortcuts="Control+K" placeholder="O que você está procurando?"><kbd aria-hidden="true">Ctrl+K</kbd><button aria-label="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></form>
+ <div class="hi"><a href="#" aria-label="Conta"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></a><a href="#" aria-label="Carrinho"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h12L22 7H6"/></svg></a></div>
+</div></header>
+<nav class="cats" aria-label="Categorias"><div class="in"><ul id="cats"></ul></div></nav>
+<main class="in">
+ <h1 class="sr-only">Loja Exemplo Empresas</h1>
+ <a href="#" class="ban"><img src="assets/img/banners/empresas/pichau-empresas.webp" alt="Pichau Empresas: equipamentos para a sua empresa com preço para CNPJ. Acesse o portal exclusivo." width="1450" height="140" fetchpriority="high"></a>
+ <h2 class="s">Novidades!</h2><div class="row" id="r1"></div>
+ <h2 class="s">PCs e Kits Upgrade em Promoção!</h2><div class="row" id="r2"></div>
+ <h2 class="s">Ofertas em Destaque</h2><div class="row" id="r3"></div>
+</main>
+<footer><div class="in"><div class="fc">
+ <div><h3>Institucional</h3><ul><li><a href="#">Quem somos</a></li><li><a href="#">Política de privacidade</a></li><li><a href="#">Termos de uso</a></li></ul></div>
+ <div><h3>Dúvidas</h3><ul><li><a href="#">Como comprar</a></li><li><a href="#">Cadastro de empresa</a></li><li><a href="#">Formas de pagamento</a></li><li><a href="#">Entrega</a></li></ul></div>
+ <div><h3>Ajuda</h3><ul><li><a href="#">Fale conosco</a></li><li><a href="#">Trocas e devoluções</a></li><li><a href="#">Garantia</a></li></ul></div>
+ <div><h3>Atendimento</h3><p style="line-height:1.6">Segunda a sexta, 8h às 18h<br>(00) 0000-0000<br>empresas@lojaexemplo.com.br</p></div>
+</div><div class="fbot">Loja Exemplo Empresas · CNPJ 00.000.000/0001-00 · Conteúdo fictício para estudo de layout.</div></div></footer>
+<a href="#" class="wa" aria-label="Falar pelo WhatsApp"><svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5 13.6c-.2.6-1.2 1.2-1.7 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9 0-1.4.7-2 1-2.3.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.6.3.1.2.1.7-.1 1.3Z"/></svg></a>
+<script>
+let sd=11;const r=()=>(sd=(sd*9301+49297)%233280)/233280,pk=a=>a[Math.floor(r()*a.length)];
+const C=[["Hardware",1],["Periféricos e Acessórios",1],["Computadores",1],["Kit Upgrade",0],["Monitor",1],["Cadeiras",1],["Notebooks e Portáteis",1],["Casa e Lazer",1],["Vestuário",1]];
+const chev='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg>';
+// Categorias com subitens abrem no hover e também no foco (teclado).
+cats.innerHTML=C.map(([n,d])=>`<li>${d?`<button aria-haspopup="true">${n} ${chev}</button><div class="dd"><a href="#">Subcategoria 1</a><a href="#">Subcategoria 2</a><a href="#">Subcategoria 3</a><a href="#">Ver tudo</a></div>`:`<a href="#">${n}</a>`}</li>`).join('');
+// Catálogo de assets/catalogo.js (nomes e fotos da Pichau, uso local de estudo).
+const CAT=window.LX_CATALOGO||[];
+const ord=CAT.map((_,i)=>i);for(let i=ord.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]]}
+const items=ord.map(i=>CAT[i]),pcs=items.filter(c=>c.cat==='Computador'||c.cat==='Kit Upgrade'),rest=items.filter(c=>!pcs.includes(c));
+// Sem avaliações inventadas: o card leva para o login de empresa, onde o preço aparece.
+const card=c=>`<a href="#" class="pc"><div class="pi"><img src="${c.img}" alt="" width="300" height="300" loading="lazy" decoding="async"><span class="off">-${pk([8,10,16,22,23,29,33,38,44,47,53,55])}%</span></div><h3 class="pn">${c.n}</h3><div class="login">Entre com seu CNPJ para ver o preço</div></a>`;
+r1.innerHTML=rest.slice(0,5).map(card).join('');
+r2.innerHTML=pcs.slice(0,5).map(card).join('');
+r3.innerHTML=rest.slice(5,25).map(card).join('');
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();q.focus()}});
+</script>
+<!-- Depois do script da página: os cards já existem no primeiro desenho (sem o rodapé "pular"). -->
+<script src="assets/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+ASSETS PICHAU - redesign local (uso pessoal/estudo)
+
+Descompacte na RAIZ do seu site local (mesma pasta do index.html):
+  http://127.0.0.1:8765/index.html  ->  ./assets/img/...
+
+Como referenciar (caminho relativo):
+  index.html (raiz)                 -> src="assets/img/logo/..."
+  promocao.html (raiz)              -> src="assets/img/banners/promocao/..."
+  paginas em subpasta (ex: /promocao/index.html) -> src="../assets/img/..."
+  ou absoluto, funciona em qualquer pagina: src="/assets/img/..."
+
+Estrutura:
+
+assets/img/apps/  (2)
+   applestore.svg
+   playstore.svg
+
+assets/img/banners/empresas/  (2)
+   pichau-empresas.webp
+   pichau-energy-drink.webp
+
+assets/img/banners/index/  (4)
+   banner-duplo-01-amd-cpu.webp
+   banner-duplo-02-nvidia-v1.jpg
+   banner-secundario-pc-gamer-halloween.webp
+   hero-principal-hallopruumo.webp
+
+assets/img/banners/index/slider/  (6)
+   slider-01-sandisk-optimus.webp
+   slider-02-nvidia-upgrade-geforce-rtx.webp
+   slider-03-amd-bundle-onimusha-v2.webp
+   slider-04-logitech.webp
+   slider-05-nvidia-holidays.webp
+   slider-06-amd-level-up-set-26.webp
+
+assets/img/banners/promocao/  (1)
+   cupom-desconto.webp
+
+assets/img/categorias/  (17)
+   cadeiras-e-mesas-gamer-e-escritorio.png
+   casa-e-lazer.png
+   casa-inteligente.png
+   computadores.png
+   eletronicos.png
+   energetico.png
+   hardware.png
+   kit-upgrade.png
+   mochilas.png
+   monitores.png
+   notebooks-e-portateis.png
+   openbox.png
+   perifericos.png
+   pets.png
+   redes-e-wireless.png
+   vestuario.png
+   video-games.png
+
+assets/img/icones/  (4)
+   gaming-white.webp
+   monte-white.webp
+   pichau-white.webp
+   workstation.webp
+
+assets/img/logo/  (2)
+   favicon.ico
+   logo-pichau.webp
+
+assets/img/mascote/  (2)
+   pru-ocioso.webp
+   pru-olhar-centro.webp
+
+assets/img/pagamento/  (6)
+   american.png
+   boleto.png
+   mastercard.png
+   nubank.svg
+   pix.png
+   visa.png
+
+assets/img/produtos/  (105)
+   antena-de-internet-starlink-mini-x-internet-via-satelite-r.webp
+   cadeira-gamer-pichau-omega-s-onix-pg-omgs-onix.webp
+   cadeira-gamer-tgt-heron-tc2-preto-e-cinza-tgt-hrtc-bl03.webp
+   cadeira-office-zinnia-dax-braco-2d-espuma-moldada-cinza.webp
+   cadeira-office-zinnia-dax-braco-2d-espuma-moldada-preta.webp
+   cadeira-office-zinnia-hera-l-preto-zno-hral-bk02.webp
+   cadeira-pichau-office-lyse-full-mesh-braco-5d-base-alumin.webp
+   camiseta-oversized-pichau-originals-cyber-synth-cms-pg-cybe.webp
+   camiseta-oversized-pichau-originals-reborn-cms-pg-reborn.webp
+   combo-gamer-pichau-netuno-4x1-rainbow-teclado-abnt2-mous.webp
+   computador-gamer-completo-pichau-lamia-v-amd-ryzen-5-3400g.webp
+   computador-gamer-pichau-fenrir-iv-amd-ryzen-5-5500-radeon.webp
+   computador-gamer-pichau-gd200-intel-core-i7-radeon-rx-580.webp
+   controle-gamer-mancer-rcw99-pro-hall-effect-nintendo-switc.webp
+   cooler-para-processador-deepcool-ak620-g2-digital-nyx-120mm.webp
+   copo-termico-pichau-zero-600ml-azul-e-vermelho-pg-hhr100.webp
+   cupom-ff10.webp
+   cupom-skrp10.webp
+   energetico-pichau-acai-zero-350ml-pch-eng-acai-zero-un.webp
+   energetico-pichau-protein-black-cherry-zero-350ml-pch-eng.webp
+   extensor-de-tela-duplo-para-notebook-zinnia-vision-pro-14-p.webp
+   fone-de-ouvido-kz-ed9-pro-sem-microfone-preto-kz-ed9pro-b.webp
+   fonte-asus-rog-strix-1200w-platinum-1200w-80-plus-platinum.webp
+   fonte-corsair-rm750e-750w-full-modular-atx-3-1-pcie-5-1.webp
+   fonte-thermalright-tr-kg650-650w-atx-3-1-pcie-5-0-80-plu.webp
+   gabinete-gamer-corsair-frame-4000d-rs-argb-mid-tower-late.webp
+   gabinete-gamer-pichau-cypher-mid-tower-lateral-de-vidro-p.webp
+   gabinete-gamer-pichau-osiris-mini-tower-lateral-de-vidro.webp
+   gabinete-gamer-pichau-osiris-pro-mid-tower-lateral-de-vidr.webp
+   kit-chave-de-precisao-eletrica-pichau-fenda-parafusadeira-6.webp
+   kit-ventoinha-pichau-ventus-nx-argb-3x120mm-branco-pch-v.webp
+   kit-ventoinha-pichau-ventus-nx-argb-5x120mm-branco-pch-v.webp
+   kit-ventoinha-pichau-ventus-nx-reverse-argb-3x120mm-branc.webp
+   memoria-team-group-t-force-vulcan-z-8gb-1x8gb-ddr4-3200.webp
+   mesa-digitalizadora-zinnia-momentum-mt40-5080lpi-niveis-de.webp
+   mesa-gamer-mancer-arcane-140cm-rgb-preto-mcr-arc-rgb.webp
+   mesa-para-escritorio-zinnia-aurea-a180-vidro-temperado-180.webp
+   microfone-mancer-horcrux-pft-rgb-usb-preto-mcr-hcrpft-bl.webp
+   mini-supercomputador-gigabyte-ai-top-atom-atagb10-nvidia-gb.webp
+   monitor-gamer-aoc-agon-cs2-25-24-5-pol-ips-fhd-0-3ms-31.webp
+   monitor-gamer-aoc-agon-quad-27-27-pol-ips-qhd-0-5ms-180.webp
+   monitor-gamer-asus-tuf-gaming-vg279qm5a-27-pol-fast-ips-f.webp
+   monitor-gamer-gigabyte-aorus-fo27q5p-27-pol-qd-oled-qhd.webp
+   monitor-gamer-mancer-valak-zx182-27-pol-va-curvo-fhd-1m.webp
+   monitor-gamer-msi-mag-24-5-pol-ips-fhd-0-5ms-240hz-ada.webp
+   monitor-gamer-msi-mag-27-pol-rapid-ips-wqhd-0-5ms-240hz.webp
+   monitor-gamer-pichau-athen-v4b-23-8-pol-va-fhd-1ms-144h.webp
+   mouse-ajazz-aj159p-12000dpi-6-botoes-wireless-preto-aj1.webp
+   mouse-gamer-ajazz-aj179p-mc-18000dpi-6-botoes-wireless-b.webp
+   mouse-gamer-redragon-storm-rgb-12400dpi-preto-m808-rgb.webp
+   pc-completo-mancer-draco-ii-amd-ryzen-3-3200g-8gb-ddr4-ss.webp
+   pc-gamer-completo-pichau-fenrir-iii-amd-ryzen-5-5500-radeo.webp
+   pc-gamer-completo-pichau-isis-viii-amd-ryzen-5-5500-geforc.webp
+   pc-gamer-mancer-krampus-amd-ryzen-5-5500-geforce-rtx-3060.webp
+   pc-gamer-pichau-abaddon-amd-ryzen-5-5500-radeon-rx-7600-8g.webp
+   pc-gamer-pichau-afrodite-amd-ryzen-5-5500-geforce-rtx-3060.webp
+   pc-gamer-pichau-amd-ryzen-7-5700x-geforce-rtx-3060-12gb.webp
+   pc-gamer-pichau-amd-ryzen-7-5700x-geforce-rtx-5060-8gb-16.webp
+   pc-gamer-pichau-amd-ryzen-7-5700x-radeon-rx-7600-8gb-16gb.webp
+   pc-gamer-pichau-cratos-iii-amd-ryzen-7-5700x-geforce-rtx-5.webp
+   pc-gamer-pichau-fenrir-ii-amd-ryzen-5-5500-radeon-rx-580-8.webp
+   pc-gamer-pichau-helheim-intel-i5-12400f-geforce-rtx-5050-8.webp
+   pc-gamer-pichau-incubo-amd-ryzen-5-5500-geforce-rtx-5050-8.webp
+   pc-gamer-pichau-isis-vi-amd-ryzen-5-5500-geforce-rtx-5060.webp
+   pc-gamer-pichau-juno-ii-intel-i5-12400f-geforce-rtx-3060-1.webp
+   pc-gamer-pichau-lamia-amd-ryzen-5-3400g-8gb-ddr4-ssd-240g.webp
+   pc-gamer-pichau-lamia-ii-amd-ryzen-5-3400g-16gb-ddr4-ssd.webp
+   pc-gamer-pichau-lamia-iii-amd-ryzen-5-3400g-16gb-ddr4-ssd.webp
+   pc-gamer-pichau-msi-mlg-amd-ryzen-7-7800x3d-geforce-rtx-50.webp
+   pc-gamer-pichau-ninigi-amd-ryzen-7-5700x-geforce-rtx-3070.webp
+   pc-gamer-pichau-osiris-intel-i5-12400f-radeon-rx-6600-8gb.webp
+   pc-home-pichau-hm180-amd-ryzen-3-3200g-16gb-ddr4-ssd-240g.webp
+   pc-home-pichau-hm758-amd-ryzen-5-3400g-8gb-ddr4-ssd-120gb.webp
+   pc-home-pichau-hm759-amd-ryzen-5-3400g-8gb-ddr4-ssd-240gb.webp
+   pc-mancer-draco-ii-amd-ryzen-3-3200g-8gb-ddr4-ssd-240gb.webp
+   pichau-kit-upgrade-amd-ryzen-3-3200g-a520m-ddr4-8gb.webp
+   pichau-kit-upgrade-amd-ryzen-5-5500-b450m-steel-legend-ddr.webp
+   pichau-kit-upgrade-amd-ryzen-7-5700x-b450m-steel-legend-dd.webp
+   pichau-kit-upgrade-amd-ryzen-7-5700x-b550m-aorus-elite-ddr.webp
+   pichau-kit-upgrade-amd-ryzen-7-5700x-b550m-ddr4-16gb.webp
+   placa-de-video-xfx-radeon-rx-7600-speedster-swft210-8gb-gd.webp
+   placa-mae-asus-tuf-gaming-b650m-e-wifi-ddr5-socket-amd-am5.webp
+   placa-mae-pichau-orion-b850m-ddr5-socket-am5-m-atx-pch-b.webp
+   pokemon-tcg-mega-evolution-pitch-black-build-battle-box.webp
+   poltrona-gamer-pichau-ac50-caramel-pg-plna-cml.webp
+   prateleira-multiuso-de-streaming-para-monitor-zinnia-core-a.webp
+   processador-amd-ryzen-5-5500-6-core-12-threads-3-6ghz-4.webp
+   processador-amd-ryzen-5-7600x3d-6-core-12-threads-4-1ghz.webp
+   processador-amd-ryzen-7-5800x3d-8-core-16-threads-3-4ghz.webp
+   raquete-padel-pro-pichau-vesper-warrior-18k-carbon-gota-pe.webp
+   ssd-lexar-nm790-512gb-m-2-2280-pcie-nvme-leitura-7200mb.webp
+   ssd-sandisk-optimus-5100-500-gb-m-2-2280-pcie-nvme-leitu.webp
+   suporte-articulado-com-pistao-a-gas-para-monitor-zinnia-nimb.webp
+   suporte-articulado-para-dois-monitores-nbjohson-gs-mrz06-13.webp
+   suporte-articulado-para-monitor-pichau-serpens-17-pol-a-49.webp
+   suporte-para-microfone-zinnia-g2-lift-baixo-perfil-articula.webp
+   suporte-para-notebook-e-monitor-zinnia-snt10-zno-zsnt10-bl0.webp
+   teclado-mecanico-corsair-vanguard-96-rgb-switch-mlx-plasma.webp
+   teclado-mecanico-mancer-black-ghost-v3-rainbow-switch-huan.webp
+   teclado-mecanico-solid-gear-adamantium-rgb-switch-outemu-a.webp
+   teclado-mecanico-tgt-sherman-v3-rainbow-abnt2-switch-huan.webp
+   ventoinha-nzxt-f140rgb-core-140mm-branco-rf-c14sf-w1.webp
+   ventoinha-pichau-ventus-nx-argb-120mm-branco-pch-vtn-wh0.webp
+   ventoinha-pichau-ventus-nx-reverse-argb-120mm-branco-pch.webp
+   webcam-mancer-koldun-1080p-usb-rgb-mcr-kldn-rgb.webp
+
+assets/img/selos/  (3)
+   ebit.png
+   google.png
+   site-blindado.svg
+
+manifest.json = de onde veio cada arquivo + alt original + pagina de origem.
+Obs: imagens servidas pelo otimizador do site (qualidade ~75, largura original). Banners tem data de campanha (out/2026).
+Logo e banners sao marca/propriedade da Pichau: use so localmente, nao publique como se fosse o site oficial.

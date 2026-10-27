@@ -1,0 +1,8 @@
+# repositórios de terceiros (cada um tem seu próprio .git)
+referencias/
+
+node_modules/
+dist/
+
+# fotos de produto com pessoas reais (LGPD) — já ocultas no site via LX_OCULTAS
+loja-clone/assets/img/produtos/camiseta-*
