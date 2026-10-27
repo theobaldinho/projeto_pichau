@@ -8,7 +8,12 @@
 <meta name="theme-color" content="#303030">
 <meta name="color-scheme" content="dark light">
 <script>try{if(localStorage.getItem('lx-theme')==='light')document.documentElement.dataset.theme='light'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<!-- Configurador e catálogo baixam junto com a página (sem esperar o script para descobrir o JSON). -->
+<link rel="modulepreload" href="assets/configurador/monte-seu-pc.js">
+<link rel="preload" href="assets/configurador/catalog.json" as="fetch" crossorigin>
 <link rel="icon" href="assets/img/logo/favicon.ico">
 <link rel="stylesheet" href="assets/style.css">
 <style>

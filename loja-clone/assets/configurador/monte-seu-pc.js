@@ -212,7 +212,7 @@ function D(e, t) {
 		...b(y(e, t))
 	];
 }
-function ee(e, t) {
+function O(e, t) {
 	return e.flatMap((e) => {
 		if (e.severity !== "nofit") return [e];
 		let n = t.find((t) => t.code === e.code);
@@ -226,14 +226,14 @@ function ee(e, t) {
 		}];
 	});
 }
-function O(e, n) {
+function k(e, n) {
 	let r = E(e, n), i = e.parts.filter((e) => e.slot === "psu"), a = D(r, i), o = (e) => {
 		let t = { ...r };
 		return delete t[e], D(t, i);
 	}, s = {};
 	for (let { slot: n } of t) {
 		let t = e.parts.filter((e) => e.slot === n).sort((e, t) => e.pricePix - t.pricePix).map((e) => {
-			let t = ee(D({
+			let t = O(D({
 				...r,
 				[n]: e
 			}, i).filter((e) => e.slots.includes(n)), o(n));
@@ -264,7 +264,7 @@ function O(e, n) {
 	};
 }
 // src/core/share.ts
-var k = "b";
+var ee = "b";
 function te(e) {
 	return t.filter((t) => e[t.slot]).map((t) => `${t.slot}:${e[t.slot]}`).join(",");
 }
@@ -1675,7 +1675,7 @@ var dn = Me`
 		})), this.updateComplete.then(() => this.focusTrigger());
 	}
 	_thumb(e, t) {
-		return e.image ? L`<img src=${e.image} alt="" width=${t} height=${t} loading="lazy">` : L`<div class="ph" style="width:${t}px;height:${t}px"></div>`;
+		return e.image ? L`<img src=${e.image} alt="" width=${t} height=${t} loading="lazy" decoding="async">` : L`<div class="ph" style="width:${t}px;height:${t}px"></div>`;
 	}
 	render() {
 		let e = this.selected, t = this.issues.find((e) => e.severity !== "warning") ?? this.issues[0], n = e ? "1 peça selecionada" : this.required ? "Nenhuma peça selecionada" : "Opcional · nenhuma peça selecionada", r = this.highlight && this.required && !e, i = () => this.show();
@@ -1919,7 +1919,7 @@ var mn = 8, hn = [
 			bolt: en
 		};
 		return L`<li class="prod ${e.status} ${t ? "sel" : ""}">
-      <div class="pimg">${n.image ? L`<img src=${n.image} alt="" width="120" height="120" loading="lazy">` : L`<div class="ph"></div>`}</div>
+      <div class="pimg">${n.image ? L`<img src=${n.image} alt="" width="120" height="120" loading="lazy" decoding="async">` : L`<div class="ph"></div>`}</div>
       <div class="info">
         <h3 class="pname">${n.name}</h3>
         <div class="tags">${an(n).map((e) => L`<span class="tag ${e.ic ?? ""}">${e.ic ? i[e.ic] : z}${e.t}</span>`)}</div>
@@ -2346,19 +2346,19 @@ function Bn(t) {
 			s
 		]
 	};
-	let x = n.mobo?.formFactor ?? l, S = kn[x], C = a - vn, w = o - u, T = C - 85, E = w - 85, D = w - S.slot, ee = D - r.expansionSlots * _n, O = (e) => T - 70 - e * 9, k = v(J(n.mobo ? `mobo:${n.mobo.id}` : "mobo:ghost", "mobo", n.mobo ? "part" : "ghost", q.mobo, [C - S.w, C], [w - S.h, w], [c, c + 3]));
+	let x = n.mobo?.formFactor ?? l, S = kn[x], C = a - vn, w = o - u, T = C - 85, E = w - 85, D = w - S.slot, O = D - r.expansionSlots * _n, k = (e) => T - 70 - e * 9, ee = v(J(n.mobo ? `mobo:${n.mobo.id}` : "mobo:ghost", "mobo", n.mobo ? "part" : "ghost", q.mobo, [C - S.w, C], [w - S.h, w], [c, c + 3]));
 	if (n.mobo) {
 		let e = C - S.w, t = w - S.h;
-		k.model = {
+		ee.model = {
 			type: "mobo",
 			socket: [T - e, E - t],
 			sock: Mn(n.mobo.socket),
-			dimmX: Array.from({ length: n.mobo.memSlots }, (t, n) => O(n) - e),
+			dimmX: Array.from({ length: n.mobo.memSlots }, (t, n) => k(n) - e),
 			pcieY: D - t,
 			atx24: x !== "itx"
 		};
 	}
-	y("mobo", k);
+	y("mobo", ee);
 	let te = a - W - r.maxPsuLengthMm, A = [
 		te - 106,
 		te,
@@ -2383,18 +2383,18 @@ function Bn(t) {
 			w + 6,
 			y + 22,
 			Math.min(w + 20, o - 8)
-		], ee = kn[x], O = C - ee.w, k = w - ee.h, te = x === "itx" ? [
-			[O + 10, k + 10],
-			[C - 10, k + 10],
-			[O + 10, w - 10],
+		], O = kn[x], k = C - O.w, ee = w - O.h, te = x === "itx" ? [
+			[k + 10, ee + 10],
+			[C - 10, ee + 10],
+			[k + 10, w - 10],
 			[C - 10, w - 10]
 		] : [
-			O + 6.35,
-			O + ee.w / 2,
+			k + 6.35,
+			k + O.w / 2,
 			C - 6.35
 		].flatMap((e) => [
-			k + 6.35,
-			k + ee.h / 2,
+			ee + 6.35,
+			ee + O.h / 2,
 			w - 6.35
 		].map((t) => [e, t])), ne = {};
 		if (n.psu && n.mobo && x !== "itx" && _.length && (ne.atx24 = [
@@ -2409,7 +2409,7 @@ function Bn(t) {
 				c - 10
 			],
 			[
-				C - ee.w + 4,
+				C - O.w + 4,
 				E,
 				c - 7
 			]
@@ -2584,7 +2584,7 @@ function Bn(t) {
 	if (n.ram) {
 		let e = n.ram;
 		for (let t = 0; t < e.modules; t++) {
-			let n = O(t), r = v({
+			let n = k(t), r = v({
 				...J(`ram:${e.id}:${t}`, "ram", "part", q.ram, [n - 3.5, n + 3.5], [E + 5 - 66.5, E + 5 + 66.5], [c - e.heightMm, c]),
 				model: {
 					type: "ram",
@@ -2627,7 +2627,7 @@ function Bn(t) {
 				c - K - 6
 			]
 		})), i > r.expansionSlots * _n && v({
-			...J(`${t}:excess-slots`, "gpu", "excess", q.excess, [C - e.lengthMm, C], [D - i, ee], [c - K - 5, c - 5]),
+			...J(`${t}:excess-slots`, "gpu", "excess", q.excess, [C - e.lengthMm, C], [D - i, O], [c - K - 5, c - 5]),
 			axis: 1
 		});
 	}
@@ -3339,24 +3339,16 @@ var mr = "mp-viewer-mode", hr = () => matchMedia("(prefers-reduced-motion: reduc
 	frente: "Frente",
 	traseira: "Traseira",
 	topo: "Topo"
-}, _r = L`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>`, vr = L`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>`;
-function yr() {
-	try {
-		let e = document.createElement("canvas");
-		return !!(e.getContext("webgl2") || e.getContext("webgl"));
-	} catch {
-		return !1;
-	}
-}
+}, _r = L`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>`, vr = L`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>`, yr = () => typeof WebGLRenderingContext < "u";
 function br() {
 	try {
 		let e = localStorage.getItem(mr);
 		if (e === "2d" || e === "3d") return e === "3d" && !yr() ? "2d" : e;
 	} catch {}
 	let e = navigator;
-	return !(e.connection?.saveData || (e.deviceMemory ?? 8) <= 2) && yr() ? "3d" : "2d";
+	return !(e.connection?.saveData || (e.deviceMemory ?? 8) <= 2 || (e.hardwareConcurrency || 8) <= 2) && yr() ? "3d" : "2d";
 }
-var xr = class extends V {
+var xr = (e) => requestAnimationFrame(() => setTimeout(e)), Sr = class extends V {
 	static properties = {
 		evaluation: { attribute: !1 },
 		focusPart: { attribute: !1 },
@@ -3371,6 +3363,8 @@ var xr = class extends V {
 	io;
 	visible = !1;
 	layout;
+	sceneQueued = !1;
+	queuedFocus;
 	constructor() {
 		super(), this._mode = br(), this._loading = !1, this._full = !1, this._said = "";
 	}
@@ -3419,7 +3413,9 @@ var xr = class extends V {
 	connectedCallback() {
 		super.connectedCallback(), document.addEventListener("fullscreenchange", this.onFsChange), this.io = new IntersectionObserver(([e]) => {
 			this.visible = e.isIntersecting, this.scene?.setActive(this.visible), this.visible && this._mode === "3d" && this.ensureScene();
-		}), this.io.observe(this);
+		}), this.io.observe(this), this._mode === "3d" && (window.requestIdleCallback ?? ((e) => setTimeout(e, 2e3)))(() => {
+			this._mode === "3d" && import("./scene-BG5KdtB8.js").catch(() => {});
+		}, { timeout: 5e3 });
 	}
 	disconnectedCallback() {
 		super.disconnectedCallback(), document.removeEventListener("fullscreenchange", this.onFsChange), document.removeEventListener("keydown", this.onEscFallback), this.io?.disconnect(), this.scene?.dispose(), this.scene = void 0;
@@ -3430,15 +3426,23 @@ var xr = class extends V {
 	updated(e) {
 		if (e.has("_mode") && (this._mode === "3d" && this.visible && this.ensureScene(), this._mode === "2d" && (this.scene?.dispose(), this.scene = void 0, this.loadingScene = void 0)), this.scene && this.layout && (e.has("evaluation") || e.has("focusPart"))) {
 			let t = e.get("focusPart");
-			this.scene.update(this.layout, this.focusPart && this.focusPart.n !== t?.n ? this.focusPart.slot : void 0);
+			this.queueScene(this.focusPart && this.focusPart.n !== t?.n ? this.focusPart.slot : void 0);
 		}
 	}
+	queueScene(e) {
+		e && (this.queuedFocus = e), !this.sceneQueued && (this.sceneQueued = !0, xr(() => {
+			this.sceneQueued = !1;
+			let e = this.queuedFocus;
+			this.queuedFocus = void 0, this.scene && this.layout && this.scene.update(this.layout, e);
+		}));
+	}
 	ensureScene() {
-		this.scene || this.loadingScene || (this._loading = !0, this.loadingScene = import("./scene-AYTmqXTT.js").then(({ PcScene: e }) => {
+		this.scene || this.loadingScene || (this._loading = !0, this.loadingScene = import("./scene-BG5KdtB8.js").then(async ({ PcScene: e }) => {
 			if (this._mode !== "3d") return;
 			let t = this.renderRoot.querySelector("canvas"), n = this.renderRoot.querySelector(".overlay");
 			try {
-				this.scene = new e(t, n, { animate: !hr() }), this.scene.setWheelZoom(this._full), this.layout && this.scene.update(this.layout), this.scene.setActive(this.visible);
+				let r = this.scene = new e(t, n, { animate: !hr() });
+				r.setWheelZoom(this._full), this.layout && r.update(this.layout), r.setActive(this.visible), await r.ready;
 			} catch (e) {
 				console.warn("[monte-seu-pc] 3D indisponível, usando 2D", e), this._mode = "2d";
 			}
@@ -3538,9 +3542,9 @@ var xr = class extends V {
     .note.bad { color: var(--mp-danger-text); }
   `];
 };
-customElements.get("mp-pc-viewer") || customElements.define("mp-pc-viewer", xr);
+customElements.get("mp-pc-viewer") || customElements.define("mp-pc-viewer", Sr);
 // src/ui/monte-seu-pc.ts
-var Sr = () => matchMedia("(prefers-reduced-motion: reduce)").matches, Cr = class extends V {
+var Cr = () => matchMedia("(prefers-reduced-motion: reduce)").matches, wr = class extends V {
 	static properties = {
 		catalog: { type: String },
 		catalogData: { attribute: !1 },
@@ -3584,7 +3588,7 @@ var Sr = () => matchMedia("(prefers-reduced-motion: reduce)").matches, Cr = clas
 		this._set(e);
 	}
 	_set(e) {
-		this._cat && (this._eval = O(this._cat, e), this.syncUrl && history.replaceState(history.state, "", re(new URL(location.href), this._eval.build)), this.dispatchEvent(new CustomEvent("build-change", {
+		this._cat && (this._eval = k(this._cat, e), this.syncUrl && history.replaceState(history.state, "", re(new URL(location.href), this._eval.build)), this.dispatchEvent(new CustomEvent("build-change", {
 			detail: this._eval,
 			bubbles: !0,
 			composed: !0
@@ -3642,7 +3646,7 @@ var Sr = () => matchMedia("(prefers-reduced-motion: reduce)").matches, Cr = clas
 	}
 	updated(e) {
 		let t = e.get("_eval");
-		t && t.totals.pix !== this._eval?.totals.pix && !Sr() && this.renderRoot.querySelectorAll(".big, .mtotal").forEach((e) => e.animate([{ transform: "scale(1.06)" }, { transform: "none" }], {
+		t && t.totals.pix !== this._eval?.totals.pix && !Cr() && this.renderRoot.querySelectorAll(".big, .mtotal").forEach((e) => e.animate([{ transform: "scale(1.06)" }, { transform: "none" }], {
 			duration: 220,
 			easing: "cubic-bezier(.2,.8,.2,1)"
 		}));
@@ -3820,5 +3824,5 @@ var Sr = () => matchMedia("(prefers-reduced-motion: reduce)").matches, Cr = clas
     @media (max-width: 560px) { .list { padding: 8px; gap: 10px; } }
   `];
 };
-customElements.get("monte-seu-pc") || customElements.define("monte-seu-pc", Cr);
-export { m as BASE_W, n as BLOCKING, l as FORM_FACTOR_LABEL, i as MAX_INSTALLMENTS, g as MAX_LOAD, Cr as MonteSeuPc, r as PIX_DISCOUNT, pn as PartPicker, k as SHARE_PARAM, t as SLOTS, h as TARGET_LOAD, Se as applyFilters, o as brl, ne as buildFromUrl, T as buildStatus, s as cardFromPix, ve as choices, u as compatIssues, A as decodeBuild, te as encodeBuild, O as evaluate, Ce as facetCounts, he as filtersFor, p as fitIssues, be as isActive, C as isBlocking, D as issuesFor, _ as needW, b as powerIssues, y as powerReport, f as radiatorPlacement, _e as rangeBounds, v as recommendedW, E as resolve, w as slotLabel, Te as sortOptions, c as totals, re as urlWithBuild, se as validateCatalog, S as worst };
+customElements.get("monte-seu-pc") || customElements.define("monte-seu-pc", wr);
+export { m as BASE_W, n as BLOCKING, l as FORM_FACTOR_LABEL, i as MAX_INSTALLMENTS, g as MAX_LOAD, wr as MonteSeuPc, r as PIX_DISCOUNT, pn as PartPicker, ee as SHARE_PARAM, t as SLOTS, h as TARGET_LOAD, Se as applyFilters, o as brl, ne as buildFromUrl, T as buildStatus, s as cardFromPix, ve as choices, u as compatIssues, A as decodeBuild, te as encodeBuild, k as evaluate, Ce as facetCounts, he as filtersFor, p as fitIssues, be as isActive, C as isBlocking, D as issuesFor, _ as needW, b as powerIssues, y as powerReport, f as radiatorPlacement, _e as rangeBounds, v as recommendedW, E as resolve, w as slotLabel, Te as sortOptions, c as totals, re as urlWithBuild, se as validateCatalog, S as worst };

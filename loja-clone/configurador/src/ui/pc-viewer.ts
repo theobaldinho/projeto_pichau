@@ -19,12 +19,11 @@ const VIEW_LABEL: Record<View, string> = { geral: 'Geral', vidro: 'Lateral', fre
 const ICON_FULL = html`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>`;
 const ICON_EXIT_FULL = html`<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/></svg>`;
 
-function canWebGL(): boolean {
-  try {
-    const c = document.createElement('canvas');
-    return !!(c.getContext('webgl2') || c.getContext('webgl'));
-  } catch { return false; }
-}
+/**
+ * Sem criar um contexto de teste (custa dezenas de ms e ocupa um dos poucos contextos WebGL da página):
+ * se o navegador tiver WebGL mas o contexto falhar (GPU bloqueada), a cena lança erro e a prévia cai para 2D.
+ */
+const canWebGL = () => typeof WebGLRenderingContext !== 'undefined';
 
 function defaultMode(): Mode {
   try {
@@ -32,9 +31,12 @@ function defaultMode(): Mode {
     if (saved === '2d' || saved === '3d') return saved === '3d' && !canWebGL() ? '2d' : saved;
   } catch { /* storage indisponível */ }
   const nav = navigator as Navigator & { connection?: { saveData?: boolean }; deviceMemory?: number };
-  const weak = nav.connection?.saveData || (nav.deviceMemory ?? 8) <= 2;
+  const weak = nav.connection?.saveData || (nav.deviceMemory ?? 8) <= 2 || (nav.hardwareConcurrency || 8) <= 2;
   return !weak && canWebGL() ? '3d' : '2d';
 }
+
+/** Depois da próxima pintura: o clique mostra a escolha na lista na hora; o trabalho pesado do 3D vem em seguida. */
+const afterPaint = (f: () => void) => requestAnimationFrame(() => setTimeout(f));
 
 export class PcViewer extends LitElement {
   static properties = {
@@ -63,6 +65,9 @@ export class PcViewer extends LitElement {
   private io?: IntersectionObserver;
   private visible = false;
   private layout?: Layout;
+  /** Atualização do 3D agendada (várias mudanças seguidas viram uma só); guarda a peça a focar. */
+  private sceneQueued = false;
+  private queuedFocus?: Slot;
 
   constructor() {
     super();
@@ -136,6 +141,11 @@ export class PcViewer extends LitElement {
       if (this.visible && this._mode === '3d') this.ensureScene();
     });
     this.io.observe(this);
+    // No celular a prévia só aparece pelo botão "Ver PC": baixa o 3D com a página parada para ele abrir logo.
+    if (this._mode === '3d') {
+      const idle = window.requestIdleCallback ?? ((f: () => void) => setTimeout(f, 2000));
+      idle(() => { if (this._mode === '3d') import('../three/scene').catch(() => {}); }, { timeout: 5000 });
+    }
   }
 
   disconnectedCallback() {
@@ -158,22 +168,37 @@ export class PcViewer extends LitElement {
     }
     if (this.scene && this.layout && (changed.has('evaluation') || changed.has('focusPart'))) {
       const prev = changed.get('focusPart') as PcViewer['focusPart'];
-      this.scene.update(this.layout, this.focusPart && this.focusPart.n !== prev?.n ? this.focusPart.slot : undefined);
+      this.queueScene(this.focusPart && this.focusPart.n !== prev?.n ? this.focusPart.slot : undefined);
     }
+  }
+
+  /** Remontar os modelos leva dezenas de ms em celular: fica para depois da pintura do clique. */
+  private queueScene(focus?: Slot) {
+    if (focus) this.queuedFocus = focus;
+    if (this.sceneQueued) return;
+    this.sceneQueued = true;
+    afterPaint(() => {
+      this.sceneQueued = false;
+      const f = this.queuedFocus;
+      this.queuedFocus = undefined;
+      if (this.scene && this.layout) this.scene.update(this.layout, f);
+    });
   }
 
   private ensureScene() {
     if (this.scene || this.loadingScene) return;
     this._loading = true;
-    this.loadingScene = import('../three/scene').then(({ PcScene }) => {
+    this.loadingScene = import('../three/scene').then(async ({ PcScene }) => {
       if (this._mode !== '3d') return;
       const canvas = this.renderRoot.querySelector('canvas')!;
       const overlay = this.renderRoot.querySelector<HTMLElement>('.overlay')!;
       try {
-        this.scene = new PcScene(canvas, overlay, { animate: !reducedMotion() });
-        this.scene.setWheelZoom(this._full);
-        if (this.layout) this.scene.update(this.layout);
-        this.scene.setActive(this.visible);
+        const scene = this.scene = new PcScene(canvas, overlay, { animate: !reducedMotion() });
+        scene.setWheelZoom(this._full);
+        if (this.layout) scene.update(this.layout);
+        scene.setActive(this.visible);
+        // "Carregando 3D…" até os shaders ficarem prontos (o primeiro quadro sai sem travar a página).
+        await scene.ready;
       } catch (err) {
         console.warn('[monte-seu-pc] 3D indisponível, usando 2D', err);
         this._mode = '2d';

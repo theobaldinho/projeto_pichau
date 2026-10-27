@@ -1,6 +1,8 @@
 /*
  * Renderização Three.js do layout (carregada sob demanda). Só desenha: o estado vem de buildLayout().
  * Renderiza sob demanda (sem loop contínuo), pausa fora da tela e sem animação com reduced motion.
+ * Desempenho: shaders compilados antes do primeiro quadro (sem travar a página), resolução que cai em degraus
+ * se o aparelho não acompanha o movimento, e os raios de oclusão/rótulos no máximo a cada CHECK_MS.
  */
 import {
   BoxGeometry, BufferGeometry, CanvasTexture, Raycaster, Spherical, Color, EdgesGeometry, Float32BufferAttribute,
@@ -10,7 +12,7 @@ import {
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import type { Slot } from '../core/types';
 import type { Box, Layout } from './layout';
-import { buildModel, setLook, studio } from './models';
+import { buildModel, depthOnlyMaterial, setLook, studio } from './models';
 import { FOCUS_DIR, focusDistance, occluders } from './occlusion';
 
 const UNIT = new BoxGeometry(1, 1, 1);
@@ -20,6 +22,14 @@ const easeInOut = (t: number) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 /
 
 /** Opacidade das peças que ficam na frente da peça em foco. */
 const OCCLUDER_ALPHA = 0.22;
+/** Intervalo mínimo (ms) entre os testes de raio (quem tampa a peça em foco, rótulos escondidos) durante movimento. */
+const CHECK_MS = 100;
+/** Idem durante animação automática (voo da câmera, encaixe): o estado final é calculado de qualquer jeito. */
+const CHECK_ANIM_MS = 250;
+/** Quadro em movimento mais lento que isso (ms) conta como lento; vários seguidos baixam a resolução. */
+const SLOW_FRAME_MS = 24;
+/** Parado por este tempo (ms): aplica a resolução nova (fora do gesto). */
+const SETTLE_MS = 180;
 
 export type View = 'geral' | 'vidro' | 'frente' | 'traseira' | 'topo';
 /** De onde a câmera olha em cada vista (gabinete: frente em x = 0, vidro em z = 0, topo em y). */
@@ -50,10 +60,34 @@ export class PcScene {
   /** Última peça escolhida: o que estiver entre a câmera e ela fica transparente. */
   private focusSlot?: Slot;
   private occlusionDirty = false;
+  private lastOcclusion = -Infinity;
+  private lastLabels = -Infinity;
+  private checkTimer = 0;
+  /** Shaders prontos: antes disso não desenha (o primeiro quadro não trava a página compilando). */
+  private compiled = false;
+  /** Resolve quando o primeiro quadro pode ser desenhado. */
+  readonly ready: Promise<void>;
+  private markReady!: () => void;
+  /** Variantes transparentes compiladas de antemão (mantidas vivas: descartar o material descarta o programa). */
+  private warm: Material[] = [];
+  /** Malhas de aquecimento: desenhadas uma vez (sem área na tela) e retiradas. */
+  private warmGroup?: Group;
+  /** Resolução: começa cheia (até 2×) e cai em degraus em aparelho lento; vale para a sessão. */
+  private readonly dprSteps = [...new Set([Math.min(devicePixelRatio || 1, 2), 1.5, 1, 0.75].filter(d => d <= Math.min(devicePixelRatio || 1, 2)))];
+  private dprStep = 0;
+  private slowFrames = 0;
+  /** Último quadro em movimento (para medir o ritmo só entre quadros seguidos). */
+  private lastMotion = -Infinity;
+  private settleTimer = 0;
+  /** Usuário arrastando a prévia. */
+  private dragging = false;
 
   constructor(private canvas: HTMLCanvasElement, private overlay: HTMLElement, private opts: SceneOptions) {
+    this.ready = new Promise(r => (this.markReady = r));
     this.renderer = new WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'low-power' });
-    this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+    // Checar erro de shader lê o log do driver de forma síncrona (trava a página a cada programa novo).
+    this.renderer.debug.checkShaderErrors = import.meta.env.DEV;
+    this.renderer.setPixelRatio(this.dprSteps[0]);
     this.renderer.outputColorSpace = SRGBColorSpace;
     this.disposeEnv = studio(this.scene, this.renderer);
     this.scene.add(this.root);
@@ -69,6 +103,8 @@ export class PcScene {
     this.controls.minPolarAngle = 0.15;
     this.controls.maxPolarAngle = Math.PI * 0.6;
     this.controls.addEventListener('change', () => { this.occlusionDirty = true; this.invalidate(); });
+    this.controls.addEventListener('start', () => { this.dragging = true; });
+    this.controls.addEventListener('end', () => { this.dragging = false; });
     this.ro = new ResizeObserver(() => this.resize());
     this.ro.observe(canvas.parentElement ?? canvas);
     this.resize();
@@ -123,7 +159,54 @@ export class PcScene {
     if (first || (prevSize && prevSize.some((v, i) => v !== layout.caseSize[i]) && !focus)) this.frameAll(!first);
     else if (focus) this.focusOn(focus);
     this.occlusionDirty = true;
+    if (first) this.compile();
     this.invalidate();
+  }
+
+  /** Compila os shaders em paralelo (KHR_parallel_shader_compile) antes do primeiro quadro; com folga de 4 s se o driver não responder. */
+  private compile() {
+    const done = () => {
+      if (this.compiled) return;
+      this.compiled = true;
+      this.markReady();
+      this.invalidate();
+      const idle = window.requestIdleCallback ?? ((f: () => void) => setTimeout(f, 300));
+      idle(() => this.warmFades());
+    };
+    this.renderer.compileAsync(this.scene, this.camera).then(done, done);
+    setTimeout(done, 4000);
+  }
+
+  /**
+   * Peça que tampa a peça em foco fica transparente: material transparente é outro programa de shader
+   * (e outro estado de mistura, que alguns drivers só preparam no primeiro desenho).
+   * Compila essas variantes (e o passe só de profundidade) e as desenha uma vez com a página parada,
+   * não no meio da troca de peça.
+   */
+  private warmFades() {
+    if (!this.compiled || this.warm.length) return;
+    const g = new Group();
+    const seen = new Set<Material>();
+    this.root.traverse(o => {
+      const m = (o as Mesh).material as Material | undefined;
+      if (!(o as Mesh).isMesh || !m || Array.isArray(m) || m.transparent || seen.has(m)) return;
+      seen.add(m);
+      const c = m.clone();
+      c.transparent = true;
+      c.depthWrite = false;
+      this.warm.push(c);
+      g.add(new Mesh(UNIT, c));
+    });
+    g.add(new Mesh(UNIT, depthOnlyMaterial()));
+    // Escala ~0 e sem descarte por frustum: a chamada de desenho acontece, mas não pinta nenhum pixel.
+    g.scale.setScalar(1e-6);
+    g.traverse(o => { o.frustumCulled = false; o.raycast = () => {}; });
+    this.renderer.compileAsync(g, this.camera, this.scene).catch(() => {}).then(() => {
+      if (!this.warm.length) return;   // descartada no meio
+      this.warmGroup = g;
+      this.scene.add(g);
+      this.invalidate();
+    });
   }
 
   /** Volta a câmera para a vista geral. */
@@ -217,7 +300,7 @@ export class PcScene {
     if (obj.position.equals(pos) && obj.scale.equals(size)) return;
     if (!this.opts.animate) { obj.position.copy(pos); obj.scale.copy(size); return; }
     const p0 = obj.position.clone(), s0 = obj.scale.clone();
-    this.tween(350, easeOut, k => { obj.position.lerpVectors(p0, pos, k); obj.scale.lerpVectors(s0, size, k); });
+    this.tween(350, easeOut, k => { obj.position.lerpVectors(p0, pos, k); obj.scale.lerpVectors(s0, size, k); this.occlusionDirty = true; });
   }
 
   /** Peça nova entra pelo painel lateral; se não cabe, trava e "tranca" antes de mostrar a sobra vermelha. */
@@ -232,7 +315,7 @@ export class PcScene {
       const end = obj.position.clone();
       const start = end.clone().add(new Vector3(0, 60, -320));
       obj.position.copy(start);
-      this.tween(420, easeOut, k => obj.position.lerpVectors(start, end, k), () => {
+      this.tween(420, easeOut, k => { obj.position.lerpVectors(start, end, k); this.occlusionDirty = true; }, () => {
         if (!b.conflict) return;
         // Tranco: bate no limite e volta.
         const axis = b.slot === 'cooler' ? 2 : 0;
@@ -286,7 +369,13 @@ export class PcScene {
   private removeObj(key: string, obj: Object3D) {
     this.root.remove(obj);
     this.meshes.delete(key);
-    if (obj.userData.model) obj.traverse(o => { if ((o as Mesh).isMesh) { (o as Mesh).geometry.dispose(); o.userData.fade?.dispose(); } });
+    // Geometria em cache (seções do gabinete) é reaproveitada pelo próximo modelo: não descarta.
+    if (obj.userData.model) obj.traverse(o => {
+      if (!(o as Mesh).isMesh) return;
+      const g = (o as Mesh).geometry;
+      if (!g.userData.cached) g.dispose();
+      o.userData.fade?.dispose();
+    });
   }
 
   private createMesh(b: Box): Object3D {
@@ -394,25 +483,70 @@ export class PcScene {
       if (k >= 1) { this.tweens.splice(this.tweens.indexOf(tw), 1); tw.done?.(); }
     }
     const damping = this.controls.update();
-    // Câmera ou peças se mexendo mudam quem tampa a peça em foco.
-    if (this.occlusionDirty || this.tweens.length || damping) this.updateOcclusion();
-    if (this.active) {
+    // Câmera ou peças se mexendo mudam quem tampa a peça em foco (marcado pelo evento `change` e pelos tweens).
+    // Raios contra os triângulos custam caro: no máximo a cada CHECK_MS; o último estado sempre é calculado.
+    if (this.occlusionDirty) {
+      const every = this.tweens.length ? CHECK_ANIM_MS : CHECK_MS;
+      if (now - this.lastOcclusion >= every) { this.lastOcclusion = now; this.updateOcclusion(); }
+      else this.checkLater(every - (now - this.lastOcclusion));
+    }
+    if (this.active && this.compiled) {
+      this.setDpr(now, this.dragging || damping || this.tweens.length > 0);
       this.renderer.render(this.scene, this.camera);
+      if (this.warmGroup) { this.scene.remove(this.warmGroup); this.warmGroup = undefined; }
       this.canvas.dataset.calls = String(this.renderer.info.render.calls);   // para testes de desempenho
-      this.placeLabels();
+      this.placeLabels(now);
     }
     if (this.tweens.length || damping) this.invalidate();
   }
 
-  private placeLabels() {
+  /** Testes adiados pelo intervalo mínimo: um quadro a mais quando o tempo passar. */
+  private checkLater(ms: number) {
+    if (this.checkTimer) return;
+    this.checkTimer = window.setTimeout(() => { this.checkTimer = 0; this.invalidate(); }, ms);
+  }
+
+  /**
+   * Resolução adaptativa: vários quadros lentos seguidos em movimento (arrasto, amortecimento, animação) descem um
+   * degrau. A troca só acontece com a prévia parada: mudar o tamanho do canvas espera a GPU terminar a fila e o
+   * apaga, então é feita logo antes de desenhar e nunca no meio de um gesto.
+   */
+  private setDpr(now: number, moving: boolean) {
+    const dpr = this.dprSteps[this.dprStep];
+    if (moving) {
+      const dt = now - this.lastMotion;
+      this.lastMotion = now;
+      // Só conta o ritmo entre quadros em movimento seguidos (o primeiro depois de parado não diz nada).
+      if (dt < 1000) this.slowFrames = dt > SLOW_FRAME_MS ? this.slowFrames + 1 : Math.max(0, this.slowFrames - 1);
+      if (this.slowFrames >= 8 && this.dprStep < this.dprSteps.length - 1) {
+        this.dprStep++;
+        this.slowFrames = 0;
+        // Aparelho lento: sem inércia ao soltar (a cauda do amortecimento seria uma fila de quadros caros).
+        this.controls.enableDamping = false;
+      }
+      // Degrau novo pendente: um quadro extra quando parar, para aplicá-lo.
+      clearTimeout(this.settleTimer);
+      if (this.renderer.getPixelRatio() !== this.dprSteps[this.dprStep]) this.settleTimer = window.setTimeout(() => this.invalidate(), SETTLE_MS);
+      return;
+    }
+    this.lastMotion = -Infinity;
+    if (this.renderer.getPixelRatio() !== dpr) this.renderer.setPixelRatio(dpr);
+  }
+
+  private placeLabels(now: number) {
+    if (!this.dimLines.size) return;
     const { clientWidth: w, clientHeight: h } = this.canvas;
+    // Rótulo escondido atrás de algo opaco: raio a cada CHECK_MS (a posição acompanha todo quadro).
+    const check = now - this.lastLabels >= CHECK_MS;
+    if (check) this.lastLabels = now;
+    else this.checkLater(CHECK_MS - (now - this.lastLabels));
     for (const [, d] of this.dimLines) {
       if (d.label.hidden) continue;
       const world = d.mid.clone().add(this.root.position);
       const p = world.clone().project(this.camera);
       d.label.style.transform = `translate(${((p.x + 1) / 2) * w}px, ${((1 - p.y) / 2) * h}px) translate(-50%, -50%)`;
       // Escondido atrás de algo opaco (ex.: olhando o gabinete por trás) o rótulo some, em vez de "atravessar" a peça.
-      d.label.style.visibility = this.labelBlocked(world, d.part) ? 'hidden' : 'visible';
+      if (check) d.label.style.visibility = this.labelBlocked(world, d.part) ? 'hidden' : 'visible';
     }
   }
 
@@ -445,6 +579,11 @@ export class PcScene {
 
   dispose() {
     cancelAnimationFrame(this.frame);
+    clearTimeout(this.checkTimer);
+    clearTimeout(this.settleTimer);
+    for (const m of this.warm) m.dispose();
+    this.warm = [];
+    this.markReady();   // quem espera o primeiro quadro não fica pendurado
     this.ro.disconnect();
     this.controls.dispose();
     for (const m of this.materials.values()) m.dispose();

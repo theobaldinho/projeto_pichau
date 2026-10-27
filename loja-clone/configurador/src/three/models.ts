@@ -216,6 +216,7 @@ export function tint(m: Material): Material {
 
 /** Passe só de profundidade da peça transparente: depois dele só a superfície da frente é pintada. */
 let depthOnly: MeshBasicMaterial | undefined;
+export const depthOnlyMaterial = () => (depthOnly ??= new MeshBasicMaterial({ colorWrite: false, transparent: true }));
 
 /**
  * Aparência de um modelo inteiro: vermelho de conflito e opacidade (`alpha` < 1 quando tampa a peça em foco).
@@ -242,8 +243,7 @@ export function setLook(obj: Group, conflict: boolean, alpha = 1) {
       continue;
     }
     if (!pre) {
-      depthOnly ??= new MeshBasicMaterial({ colorWrite: false, transparent: true });
-      pre = new Mesh(mesh.geometry, depthOnly);
+      pre = new Mesh(mesh.geometry, depthOnlyMaterial());
       pre.userData.pre = true;
       pre.renderOrder = 1;
       pre.raycast = () => {};
@@ -266,16 +266,49 @@ export function setLook(obj: Group, conflict: boolean, alpha = 1) {
 
 /* ---------- montagem por material ---------- */
 
+type Merged = Map<Material, BufferGeometry>;
+/**
+ * Seções já unidas, pela chave (seção, tamanho, dados de que dependem). Trocar a placa de vídeo remonta o gabinete,
+ * mas só os cabos e as tampas dos slots mudam: o resto volta daqui, sem triangular nem subir de novo para a GPU.
+ * Geometrias marcadas `cached`: a cena não as descarta ao trocar o modelo; só saem quando expulsas daqui.
+ */
+const sectionCache = new Map<string, Merged>();
+const SECTION_CACHE_MAX = 48;
+
 class Kit {
   /** Seção → material → geometrias. Seções viram subgrupos (o gabinete apaga só o painel que tampa a peça). */
   private sections = new Map<string, Map<Material, BufferGeometry[]>>();
   private geos = new Map<Material, BufferGeometry[]>();
+  /** Seções reaproveitadas do cache e chaves das seções novas a guardar. */
+  private hits = new Map<string, Merged>();
+  private keys = new Map<string, string>();
   readonly extras: Mesh[] = [];
+
+  constructor(private size: Vec3) {}
 
   section(name: string) {
     let s = this.sections.get(name);
     if (!s) this.sections.set(name, s = new Map());
     this.geos = s;
+  }
+
+  /**
+   * Seção que só depende de `deps` (e do tamanho): `draw` só roda se ela não estiver no cache.
+   * `rear:slots` é um bloco à parte da seção `rear` (cache próprio, mesmo subgrupo na cena).
+   */
+  cached(name: string, deps: unknown[], draw: () => void) {
+    const key = JSON.stringify([name, this.size, deps]);
+    this.section(name);
+    const hit = sectionCache.get(key);
+    if (hit) {
+      // Mais recente no fim (ordem de expulsão).
+      sectionCache.delete(key);
+      sectionCache.set(key, hit);
+      this.hits.set(name, hit);
+      return;
+    }
+    this.keys.set(name, key);
+    draw();
   }
 
   add(mat: Material, g: BufferGeometry, m?: Matrix4) {
@@ -302,27 +335,54 @@ class Kit {
     this.add(mat, g, orient(axis, c));
   }
 
-  build(size: Vec3) {
+  build() {
     const group = new Group();
-    const [sx, sy, sz] = size;
-    const merge = (geos: Map<Material, BufferGeometry[]>, into: Group) => {
+    const [sx, sy, sz] = this.size;
+    const merge = (geos: Map<Material, BufferGeometry[]>): Merged => {
+      const out: Merged = new Map();
       for (const [mat, list] of geos) {
         const g = mergeGeometries(list, false)!;
         for (const l of list) l.dispose();
         g.translate(-sx / 2, -sy / 2, -sz / 2);
         g.computeBoundingBox();
+        out.set(mat, g);
+      }
+      return out;
+    };
+    const meshes = (merged: Merged, into: Group) => {
+      for (const [mat, g] of merged) {
         const mesh = new Mesh(g, mat);
         // O vidro não "tampa" nada: já é transparente.
         if (mat === mats().glass) mesh.raycast = () => {};
         into.add(mesh);
       }
     };
-    if (!this.sections.size) merge(this.geos, group);
+    if (!this.sections.size) meshes(merge(this.geos), group);
+    const subs = new Map<string, Group>();
     for (const [name, geos] of this.sections) {
-      const sub = new Group();
-      sub.userData.section = name;
-      merge(geos, sub);
-      group.add(sub);
+      let merged = this.hits.get(name);
+      const key = this.keys.get(name);
+      if (!merged) {
+        merged = merge(geos);
+        if (key) {
+          for (const g of merged.values()) g.userData.cached = true;
+          sectionCache.set(key, merged);
+          if (sectionCache.size > SECTION_CACHE_MAX) {
+            const [old, evicted] = sectionCache.entries().next().value!;
+            sectionCache.delete(old);
+            // Se ainda estiver em uso, a cena só sobe a geometria de novo no próximo quadro.
+            for (const g of evicted.values()) g.dispose();
+          }
+        }
+      }
+      const section = name.split(':')[0];
+      let sub = subs.get(section);
+      if (!sub) {
+        subs.set(section, sub = new Group());
+        sub.userData.section = section;
+        group.add(sub);
+      }
+      meshes(merged, sub);
     }
     for (const e of this.extras) { e.geometry.translate(-sx / 2, -sy / 2, -sz / 2); e.userData.extra = true; group.add(e); }
     return group;
@@ -345,6 +405,21 @@ const rect = (u0: number, v0: number, u1: number, v1: number) => {
   return p;
 };
 const circle = (u: number, v: number, r: number) => { const p = new Path(); p.absarc(u, v, r, 0, Math.PI * 2, true); return p; };
+
+const plates = new Map<string, BufferGeometry>();
+/**
+ * Chapa cara de triangular (centenas de furos) guardada pela chave dos dados que a definem: trocar de peça
+ * remonta o gabinete inteiro, mas a traseira com a colmeia só é triangulada de novo se o gabinete mudar.
+ * `Kit.add` copia a geometria, então a guardada nunca é alterada nem descartada.
+ */
+function cachedPlate(key: string, make: () => BufferGeometry) {
+  let g = plates.get(key);
+  if (!g) {
+    if (plates.size >= 8) plates.delete(plates.keys().next().value!);
+    plates.set(key, g = make());
+  }
+  return g;
+}
 
 /** Chapa retangular (u0..u1 × v0..v1) com furos, espessura `depth` no eixo z do shape. */
 function plate(u0: number, v0: number, u1: number, v1: number, holes: Path[], depth: number, curveSegments = 12) {
@@ -576,9 +651,9 @@ const am4Socket = () => canvasMat('am4', 192, 192, '#e2dac4', g => {
 /* ---------- peças ---------- */
 
 export function buildModel(model: Model, size: Vec3): Group {
-  const kit = new Kit();
+  const kit = new Kit(size);
   BUILDERS[model.type](kit, size, model as never);
-  return kit.build(size);
+  return kit.build();
 }
 
 /** Etiqueta com linhas de texto. `flip`: gira 180° (face de cima de uma caixa tem o "v" invertido). */
@@ -594,127 +669,146 @@ type Builder<T extends Model['type']> = (k: Kit, s: Vec3, m: Extract<Model, { ty
 const BUILDERS: { [T in Model['type']]: Builder<T> } = {
   case(k, [L, H, W], c) {
     const m = mats(), e = 5;
+    // Cada seção declara os dados de que depende: trocar de peça só reconstrói as seções que mudaram (ex.: cabos).
+    const bundle = (pts: Vec3[], r: number) => k.add(m.rubber, new TubeGeometry(new CatmullRomCurve3(pts.map(v => new Vector3(...v)), false, 'centripetal'), 40, r, 8, false));
     // Quadro: 12 arestas.
-    k.section('frame');
-    for (const y of [0, H - e]) for (const z of [0, W - e]) k.box(m.frame, 0, L, y, y + e, z, z + e);
-    for (const x of [0, L - e]) for (const z of [0, W - e]) k.box(m.frame, x, x + e, e, H - e, z, z + e);
-    for (const x of [0, L - e]) for (const y of [0, H - e]) k.box(m.frame, x, x + e, y, y + e, e, W - e);
-    k.section('floor');
-    k.box(m.inner, e, L - e, 0, 2, e, W - e);
-    // Filtro de poeira sob a entrada da fonte e os pés de borracha onde ela apoia.
-    const [, , fz0, fz1] = c.psu;
-    k.box(m.mesh, L - 3 - 175, L - 3 - 8, 2, 2.3, fz0 + 12, fz1 - 12);
-    for (const x of [L - 3 - 22, L - 3 - 128]) for (const z of [fz0 + 8, fz1 - 8]) k.box(m.rubber, x - 6, x + 6, 2, 4, z - 6, z + 6);
+    k.cached('frame', [], () => {
+      for (const y of [0, H - e]) for (const z of [0, W - e]) k.box(m.frame, 0, L, y, y + e, z, z + e);
+      for (const x of [0, L - e]) for (const z of [0, W - e]) k.box(m.frame, x, x + e, e, H - e, z, z + e);
+      for (const x of [0, L - e]) for (const y of [0, H - e]) k.box(m.frame, x, x + e, y, y + e, e, W - e);
+    });
+    k.cached('floor', [c.psu], () => {
+      k.box(m.inner, e, L - e, 0, 2, e, W - e);
+      // Filtro de poeira sob a entrada da fonte e os pés de borracha onde ela apoia.
+      const [, , fz0, fz1] = c.psu;
+      k.box(m.mesh, L - 3 - 175, L - 3 - 8, 2, 2.3, fz0 + 12, fz1 - 12);
+      for (const x of [L - 3 - 22, L - 3 - 128]) for (const z of [fz0 + 8, fz1 - 8]) k.box(m.rubber, x - 6, x + 6, 2, 4, z - 6, z + 6);
+    });
 
     // Gaiola de discos na frente da fonte: a parede de trás dela é o limite de comprimento da fonte.
     // Lateral do lado do vidro vazada (aparecem as 2 bandejas de HD), tampa em cima (onde vai o SSD de 2,5").
-    k.section('cage');
-    const [gx0, gx1, gy0, gy1, gz0, gz1] = c.cage;
-    k.box(m.inner, gx0, gx1, gy1 - 1.5, gy1, gz0, gz1);
-    k.box(m.inner, gx1 - 1.5, gx1, gy0, gy1 - 1.5, gz0, gz1);
-    k.box(m.inner, gx0, gx1 - 1.5, gy0, gy1 - 1.5, gz1 - 1.5, gz1);
-    k.add(m.inner, plate(gx0, gy0, gx1 - 1.5, gy1 - 1.5, [rect(gx0 + 8, gy0 + 6, gx1 - 12, gy1 - 8)], 1.5), onZ(gz0));
-    for (const [y0, y1] of [[gy0 + 3, gy0 + 24], [gy0 + 27, gy1 - 4]]) {
-      k.box(m.plastic, gx0 + 3, gx1 - 3, y0, y1, gz0 + 4, gz1 - 4);                       // bandeja
-      k.box(m.black, gx0 + 0.5, gx0 + 3, y0 + 4, y1 - 4, gz0 + 20, gz1 - 20);            // puxador
-      k.box(m.accent, gx0, gx0 + 0.5, y0 + 8, y1 - 8, gz0 + 30, gz0 + 40);
-    }
+    k.cached('cage', [c.cage], () => {
+      const [gx0, gx1, gy0, gy1, gz0, gz1] = c.cage;
+      k.box(m.inner, gx0, gx1, gy1 - 1.5, gy1, gz0, gz1);
+      k.box(m.inner, gx1 - 1.5, gx1, gy0, gy1 - 1.5, gz0, gz1);
+      k.box(m.inner, gx0, gx1 - 1.5, gy0, gy1 - 1.5, gz1 - 1.5, gz1);
+      k.add(m.inner, plate(gx0, gy0, gx1 - 1.5, gy1 - 1.5, [rect(gx0 + 8, gy0 + 6, gx1 - 12, gy1 - 8)], 1.5), onZ(gz0));
+      for (const [y0, y1] of [[gy0 + 3, gy0 + 24], [gy0 + 27, gy1 - 4]]) {
+        k.box(m.plastic, gx0 + 3, gx1 - 3, y0, y1, gz0 + 4, gz1 - 4);                       // bandeja
+        k.box(m.black, gx0 + 0.5, gx0 + 3, y0 + 4, y1 - 4, gz0 + 20, gz1 - 20);            // puxador
+        k.box(m.accent, gx0, gx0 + 0.5, y0 + 8, y1 - 8, gz0 + 30, gz0 + 40);
+      }
+    });
 
     // Bandeja: recorte atrás do processador, passa-cabos com borracha (24 pinos e de baixo) e rasgo do cabo EPS.
-    k.section('tray');
-    const [cx, cy] = c.cpu, t0 = c.tray, t1 = c.tray + 3;
-    k.add(m.inner, plate(e, e, L - e, H - e, [rect(cx - 62, cy - 58, cx + 62, cy + 58), ...c.grommets.map(g => rect(...g)), rect(...c.epsHole)], 3), onZ(t0));
-    for (const [a, b, c2, d2] of [...c.grommets, c.epsHole]) {
-      // Borracha com fenda no meio (no rasgo horizontal do EPS a fenda é horizontal).
-      if (c2 - a < d2 - b) { k.box(m.grommet, a, (a + c2) / 2 - 0.8, b, d2, t0 + 0.4, t1 - 0.4); k.box(m.grommet, (a + c2) / 2 + 0.8, c2, b, d2, t0 + 0.4, t1 - 0.4); }
-      else { k.box(m.grommet, a, c2, b, (b + d2) / 2 - 0.8, t0 + 0.4, t1 - 0.4); k.box(m.grommet, a, c2, (b + d2) / 2 + 0.8, d2, t0 + 0.4, t1 - 0.4); }
-    }
-    // Espaçadores de latão entre a bandeja e a placa-mãe.
-    for (const [x, y] of c.standoffs) k.cyl(m.gold, 'z', [x, y, (c.zm + 3 + t0) / 2], 2.6, t0 - c.zm - 3, 6);
-    // Feixes de cabos atrás da bandeja (aparecem pelos recortes e girando para trás): da fonte até os passa-cabos.
-    const zb = t1 + 9;
-    const bundle = (pts: Vec3[], r: number) => k.add(m.rubber, new TubeGeometry(new CatmullRomCurve3(pts.map(v => new Vector3(...v)), false, 'centripetal'), 40, r, 8, false));
-    const fromPsu: Vec3 = [L - 60, c.psu[1] - 20, zb];
-    if (c.grommets[0]) { const [a, b, c2, d2] = c.grommets[0]; bundle([fromPsu, [L - 80, (b + d2) / 2 - 60, zb], [(a + c2) / 2 + 20, (b + d2) / 2, zb], [(a + c2) / 2, (b + d2) / 2, t1]], 6); }
-    { const [a, , c2, d2] = c.epsHole; bundle([[L - 70, c.psu[1] - 20, zb + 4], [L - 70, d2 - 40, zb + 4], [(a + c2) / 2, d2 - 7, zb + 4], [(a + c2) / 2, d2 - 7, t1]], 3.5); }
+    k.cached('tray', [c.cpu, c.tray, c.grommets, c.epsHole, c.standoffs, c.zm, c.psu], () => {
+      const [cx, cy] = c.cpu, t0 = c.tray, t1 = c.tray + 3;
+      k.add(m.inner, plate(e, e, L - e, H - e, [rect(cx - 62, cy - 58, cx + 62, cy + 58), ...c.grommets.map(g => rect(...g)), rect(...c.epsHole)], 3), onZ(t0));
+      for (const [a, b, c2, d2] of [...c.grommets, c.epsHole]) {
+        // Borracha com fenda no meio (no rasgo horizontal do EPS a fenda é horizontal).
+        if (c2 - a < d2 - b) { k.box(m.grommet, a, (a + c2) / 2 - 0.8, b, d2, t0 + 0.4, t1 - 0.4); k.box(m.grommet, (a + c2) / 2 + 0.8, c2, b, d2, t0 + 0.4, t1 - 0.4); }
+        else { k.box(m.grommet, a, c2, b, (b + d2) / 2 - 0.8, t0 + 0.4, t1 - 0.4); k.box(m.grommet, a, c2, (b + d2) / 2 + 0.8, d2, t0 + 0.4, t1 - 0.4); }
+      }
+      // Espaçadores de latão entre a bandeja e a placa-mãe.
+      for (const [x, y] of c.standoffs) k.cyl(m.gold, 'z', [x, y, (c.zm + 3 + t0) / 2], 2.6, t0 - c.zm - 3, 6);
+      // Feixes de cabos atrás da bandeja (aparecem pelos recortes e girando para trás): da fonte até os passa-cabos.
+      const zb = t1 + 9;
+      const fromPsu: Vec3 = [L - 60, c.psu[1] - 20, zb];
+      if (c.grommets[0]) { const [a, b, c2, d2] = c.grommets[0]; bundle([fromPsu, [L - 80, (b + d2) / 2 - 60, zb], [(a + c2) / 2 + 20, (b + d2) / 2, zb], [(a + c2) / 2, (b + d2) / 2, t1]], 6); }
+      { const [a, , c2, d2] = c.epsHole; bundle([[L - 70, c.psu[1] - 20, zb + 4], [L - 70, d2 - 40, zb + 4], [(a + c2) / 2, d2 - 7, zb + 4], [(a + c2) / 2, d2 - 7, t1]], 3.5); }
+    });
 
     // Tampa de trás (fecha o espaço dos cabos).
-    k.section('back');
-    k.box(m.inner, e, L - e, e, H - e, c.back, W);
+    k.cached('back', [c.back], () => {
+      k.box(m.inner, e, L - e, e, H - e, c.back, W);
+    });
 
     // Cabos da fonte conectados (24 pinos, EPS do processador e PCIe da placa de vídeo), trançados em preto.
-    k.section('cables');
-    const cable = (pts: Vec3[], n: number, r: number, axis: 0 | 1) => {
-      for (let i = 0; i < n; i++) {
-        const off = (i - (n - 1) / 2) * r * 2.1;
-        bundle(pts.map(([x, y, z]) => [x + (axis === 0 ? off : 0), y + (axis === 1 ? off : 0), z] as Vec3), r);
-      }
-    };
-    if (c.cables.atx24) cable(c.cables.atx24, 4, 3.2, 1);
-    if (c.cables.eps) cable(c.cables.eps, 2, 3.2, 0);
-    if (c.cables.pcie) cable(c.cables.pcie, 3, 3, 0);
+    k.cached('cables', [c.cables], () => {
+      const cable = (pts: Vec3[], n: number, r: number, axis: 0 | 1) => {
+        for (let i = 0; i < n; i++) {
+          const off = (i - (n - 1) / 2) * r * 2.1;
+          bundle(pts.map(([x, y, z]) => [x + (axis === 0 ? off : 0), y + (axis === 1 ? off : 0), z] as Vec3), r);
+        }
+      };
+      if (c.cables.atx24) cable(c.cables.atx24, 4, 3.2, 1);
+      if (c.cables.eps) cable(c.cables.eps, 2, 3.2, 0);
+      if (c.cables.pcie) cable(c.cables.pcie, 3, 3, 0);
+    });
 
     // Topo com tela e o painel frontal de I/O (botão com anel iluminado, USB e áudio).
-    k.section('roof');
-    k.box(m.mesh, e, L - e, H - 2, H - 0.5, e, W - e);
-    k.cyl(m.rgb, 'y', [22, H - 0.35, W / 2 - 34], 7.5, 0.3, 28);
-    k.cyl(m.metal, 'y', [22, H - 0.25, W / 2 - 34], 6, 0.5, 28);
-    for (const z of [W / 2 - 14, W / 2 - 2]) k.box(m.usb, 16, 29, H - 0.5, H, z - 3, z + 3);
-    k.box(m.black, 16, 25, H - 0.5, H, W / 2 + 8, W / 2 + 16);
-    k.cyl(m.black, 'y', [22, H - 0.25, W / 2 + 26], 3, 0.5, 16);
+    k.cached('roof', [], () => {
+      k.box(m.mesh, e, L - e, H - 2, H - 0.5, e, W - e);
+      k.cyl(m.rgb, 'y', [22, H - 0.35, W / 2 - 34], 7.5, 0.3, 28);
+      k.cyl(m.metal, 'y', [22, H - 0.25, W / 2 - 34], 6, 0.5, 28);
+      for (const z of [W / 2 - 14, W / 2 - 2]) k.box(m.usb, 16, 29, H - 0.5, H, z - 3, z + 3);
+      k.box(m.black, 16, 25, H - 0.5, H, W / 2 + 8, W / 2 + 16);
+      k.cyl(m.black, 'y', [22, H - 0.25, W / 2 + 26], 3, 0.5, 16);
+    });
 
     // Vidro temperado com borda preta serigrafada.
-    k.section('glass');
-    const bw = 10;
-    k.box(m.glass, e + bw, L - e - bw, e + bw, H - e - bw, 0, 3);
-    k.box(m.black, e, L - e, e, e + bw, 0, 3); k.box(m.black, e, L - e, H - e - bw, H - e, 0, 3);
-    k.box(m.black, e, e + bw, e + bw, H - e - bw, 0, 3); k.box(m.black, L - e - bw, L - e, e + bw, H - e - bw, 0, 3);
+    k.cached('glass', [], () => {
+      const bw = 10;
+      k.box(m.glass, e + bw, L - e - bw, e + bw, H - e - bw, 0, 3);
+      k.box(m.black, e, L - e, e, e + bw, 0, 3); k.box(m.black, e, L - e, H - e - bw, H - e, 0, 3);
+      k.box(m.black, e, e + bw, e + bw, H - e - bw, 0, 3); k.box(m.black, L - e - bw, L - e, e + bw, H - e - bw, 0, 3);
+    });
 
     // Traseira: chapa rebaixada 0,6 mm dentro do quadro, com os furos (I/O, slots, grade da ventoinha, fonte).
-    k.section('rear');
-    const io = c.ioBox;
     const slot = (i: number) => [c.zm - 116, c.slotTop - (i + 1) * 20 + 3, c.zm - 10, c.slotTop - i * 20 - 3] as const;
-    const [py0, py1, pz0, pz1] = c.psu;
-    const face = L - 0.6;
-    const holes = [rect(...io), rect(pz0 + 4, py0 + 3, pz1 - 4, py1 - 3)];
-    for (let i = 0; i < c.slots; i++) holes.push(rect(...slot(i)));
-    if (c.rearMount) {
-      const v = (c.rearMount[0] + c.rearMount[1]) / 2, u = c.rear.z, r = c.rear.mm * 0.475;
-      // Colmeia fina (furos menores que um dedo, como nos gabinetes reais) + furos dos parafusos da ventoinha
-      // (105 mm na de 120, 82,5 mm na de 92). A ventoinha fica ao lado do I/O, sem sobrepor.
-      holes.push(...hexGrid(u, v, r, 2.3, 5.8));
-      const sp = c.rear.mm === 120 ? 52.5 : 41.25;
-      for (const du of [-sp, sp]) for (const dv of [-sp, sp]) holes.push(circle(u + du, v + dv, 2.2));
-      // Rasgos verticais do lado do vidro, ao lado da ventoinha.
-      const su = u - r - 9;
-      if (su - 3 > e + 4) for (let j = -2; j <= 2; j++) holes.push(rect(su - 2.5, v + j * 22 - 9, su + 2.5, v + j * 22 + 9));
-    }
-    // Fileira de rasgos de ventilação ao lado dos slots.
-    const vz = c.zm - 116 - 14;
-    if (vz - 4 > e + 4) for (let i = 0; i < c.slots * 2 - 1; i++) {
-      const v = c.slotTop - 6 - i * 10;
-      if (v - 3 > e + 3) holes.push(rect(vz - 3, v - 3.5, vz + 3, v + 3.5));
-    }
-    k.add(m.inner, plate(e, e, W - e, H - e, holes, 2.4, 6), onX(face));     // curveSegments 6: furos sextavados
-    // Slots: tampas livres com rasgos (as de cima ficam abertas para o suporte da placa de vídeo),
-    // trava com um parafuso por slot.
-    for (let i = c.gpuSlots; i < c.slots; i++) {
-      const [u0, v0, u1, v1] = slot(i), vc = (v0 + v1) / 2;
-      const slits = [0, 1, 2, 3].map(j => rect(u0 + 10 + j * 19, vc - 2.2, u0 + 24 + j * 19, vc + 2.2));
-      k.add(m.metal, plate(u0 - 2, v0 - 1.5, u1 + 2, v1 + 1.5, slits, 1, 4), onX(L - 3.2));
-    }
-    k.box(m.metal, L - 0.6, L - 0.3, c.slotTop - c.slots * 20, c.slotTop, c.zm - 9, c.zm - 1);
-    for (let i = 0; i < c.slots; i++) {
-      const vc = c.slotTop - i * 20 - 10;
-      k.cyl(m.metal, 'x', [L - 0.15, vc, c.zm - 5], 2.8, 0.3, 16);
-      k.box(m.hole, L - 0.02, L, vc - 0.4, vc + 0.4, c.zm - 7, c.zm - 3);   // fenda do parafuso
-    }
-    // Espelho do I/O com as portas (só com placa-mãe escolhida).
-    if (c.io) ioShield(k, L, io, c.io);
-    if (c.rearFan) fan(k, c.rear.mm, 25, [L - 3 - 12.5 - 2, (c.rearFan[0] + c.rearFan[1]) / 2, c.rear.z], 'x', { rgb: true });
-    k.section('front');                                        // frente com tela e ventoinhas
-    k.box(m.mesh, 0, 2, e, H - e, e, W - e);
-    for (const y of c.frontFans) fan(k, 120, 25, [2 + 12.5 + 1, y, W / 2], 'x', { rgb: true });
+    k.cached('rear', [c.ioBox, c.zm, c.slotTop, c.psu, c.slots, c.rearMount, c.rear, c.io, c.rearFan], () => {
+      const io = c.ioBox;
+      const [py0, py1, pz0, pz1] = c.psu;
+      const face = L - 0.6;
+      const rearKey = JSON.stringify([e, W, H, io, c.psu, c.slots, c.slotTop, c.zm, c.rearMount, c.rear]);
+      k.add(m.inner, cachedPlate(rearKey, () => {
+        const holes = [rect(...io), rect(pz0 + 4, py0 + 3, pz1 - 4, py1 - 3)];
+        for (let i = 0; i < c.slots; i++) holes.push(rect(...slot(i)));
+        if (c.rearMount) {
+          const v = (c.rearMount[0] + c.rearMount[1]) / 2, u = c.rear.z, r = c.rear.mm * 0.475;
+          // Colmeia fina (furos menores que um dedo, como nos gabinetes reais) + furos dos parafusos da ventoinha
+          // (105 mm na de 120, 82,5 mm na de 92). A ventoinha fica ao lado do I/O, sem sobrepor.
+          holes.push(...hexGrid(u, v, r, 2.3, 5.8));
+          const sp = c.rear.mm === 120 ? 52.5 : 41.25;
+          for (const du of [-sp, sp]) for (const dv of [-sp, sp]) holes.push(circle(u + du, v + dv, 2.2));
+          // Rasgos verticais do lado do vidro, ao lado da ventoinha.
+          const su = u - r - 9;
+          if (su - 3 > e + 4) for (let j = -2; j <= 2; j++) holes.push(rect(su - 2.5, v + j * 22 - 9, su + 2.5, v + j * 22 + 9));
+        }
+        // Fileira de rasgos de ventilação ao lado dos slots.
+        const vz = c.zm - 116 - 14;
+        if (vz - 4 > e + 4) for (let i = 0; i < c.slots * 2 - 1; i++) {
+          const v = c.slotTop - 6 - i * 10;
+          if (v - 3 > e + 3) holes.push(rect(vz - 3, v - 3.5, vz + 3, v + 3.5));
+        }
+        return plate(e, e, W - e, H - e, holes, 2.4, 6);   // curveSegments 6: furos sextavados
+      }), onX(face));
+      k.box(m.metal, L - 0.6, L - 0.3, c.slotTop - c.slots * 20, c.slotTop, c.zm - 9, c.zm - 1);
+      for (let i = 0; i < c.slots; i++) {
+        const vc = c.slotTop - i * 20 - 10;
+        k.cyl(m.metal, 'x', [L - 0.15, vc, c.zm - 5], 2.8, 0.3, 16);
+        k.box(m.hole, L - 0.02, L, vc - 0.4, vc + 0.4, c.zm - 7, c.zm - 3);   // fenda do parafuso
+      }
+      // Espelho do I/O com as portas (só com placa-mãe escolhida).
+      if (c.io) ioShield(k, L, io, c.io);
+      if (c.rearFan) fan(k, c.rear.mm, 25, [L - 3 - 12.5 - 2, (c.rearFan[0] + c.rearFan[1]) / 2, c.rear.z], 'x', { rgb: true });
+    });
+    // Slots: tampas livres com rasgos (as de cima ficam abertas para o suporte da placa de vídeo), trava com
+    // um parafuso por slot. Mudam com a largura da placa de vídeo: bloco separado, o resto da traseira fica no cache.
+    k.cached('rear:slots', [c.zm, c.slotTop, c.slots, c.gpuSlots], () => {
+      // Todas as tampas são iguais: uma chapa centrada em v = 0, deslocada para cada slot.
+      const [u0, v0, u1, v1] = slot(0), h = (v1 - v0) / 2;
+      const cover = cachedPlate(JSON.stringify(['cover', u0, u1, h]), () =>
+        plate(u0 - 2, -h - 1.5, u1 + 2, h + 1.5, [0, 1, 2, 3].map(j => rect(u0 + 10 + j * 19, -2.2, u0 + 24 + j * 19, 2.2)), 1, 4));
+      for (let i = c.gpuSlots; i < c.slots; i++) {
+        const [, a, , b] = slot(i);
+        k.add(m.metal, cover, onX(L - 3.2).multiply(new Matrix4().makeTranslation(0, (a + b) / 2, 0)));
+      }
+    });
+    k.cached('front', [c.frontFans], () => {   // frente com tela e ventoinhas
+      k.box(m.mesh, 0, 2, e, H - e, e, W - e);
+      for (const y of c.frontFans) fan(k, 120, 25, [2 + 12.5 + 1, y, W / 2], 'x', { rgb: true });
+    });
   },
 
   mobo(k, [w, h], b) {

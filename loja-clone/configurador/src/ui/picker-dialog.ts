@@ -219,7 +219,7 @@ export class PickerDialog extends LitElement {
     const reason = o.reasons.find(r => r.severity === o.status)?.message;
     const ic = { ok: ICON_OK, no: ICON_NO, bolt: ICON_BOLT_SM };
     return html`<li class="prod ${o.status} ${selected ? 'sel' : ''}">
-      <div class="pimg">${p.image ? html`<img src=${p.image} alt="" width="120" height="120" loading="lazy">` : html`<div class="ph"></div>`}</div>
+      <div class="pimg">${p.image ? html`<img src=${p.image} alt="" width="120" height="120" loading="lazy" decoding="async">` : html`<div class="ph"></div>`}</div>
       <div class="info">
         <h3 class="pname">${p.name}</h3>
         <div class="tags">${rowChips(p).map(c => html`<span class="tag ${c.ic ?? ''}">${c.ic ? ic[c.ic] : nothing}${c.t}</span>`)}</div>

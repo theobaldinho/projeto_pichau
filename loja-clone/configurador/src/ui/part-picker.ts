@@ -57,7 +57,7 @@ export class PartPicker extends LitElement {
 
   private _thumb(p: Part, size: number) {
     return p.image
-      ? html`<img src=${p.image} alt="" width=${size} height=${size} loading="lazy">`
+      ? html`<img src=${p.image} alt="" width=${size} height=${size} loading="lazy" decoding="async">`
       : html`<div class="ph" style="width:${size}px;height:${size}px"></div>`;
   }
 
